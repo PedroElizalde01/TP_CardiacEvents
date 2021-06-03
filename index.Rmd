@@ -1,8 +1,9 @@
 ---
-title: "index"
+title: "Graphs"
 author: "Grupo 4"
 date: "3/6/2021"
-output: html_document
+output: github_document
+always_allow_html: true
 ---
 
 ```{r setup, include=FALSE}
