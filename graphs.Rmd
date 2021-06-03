@@ -15,7 +15,6 @@ library(plotrix)
 library(ggplot2)
 library(plotly)
 library(tidyverse)
-library(VennDiagram)
  
 
 dataset <- read_excel("C:/Users/Pedro/Desktop/dataset.xlsx")
