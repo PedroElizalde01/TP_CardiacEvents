@@ -1,20 +1,17 @@
 ---
 title: "Graphs"
 author: "Grupo 4"
-date: "3/6/2021"
+date: "2021"
 output: 
   html_document:
   number_sections: yes
 ---
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(ggridges)
 library(readxl)
-library(plotrix)
-library(ggplot2)
 library(plotly)
-library(tidyverse)
  
 
 dataset <- read_excel("C:/Users/Pedro/Desktop/dataset.xlsx")
