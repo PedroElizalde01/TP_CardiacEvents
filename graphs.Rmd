@@ -2,9 +2,7 @@
 title: "Graphs"
 author: "Grupo 4"
 date: "2021"
-output: 
-  html_document:
-  number_sections: yes
+output: html_document
 ---
 
 
@@ -12,16 +10,31 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 library(readxl)
 library(plotly)
- 
 
 dataset <- read_excel("C:/Users/Pedro/Desktop/dataset.xlsx")
-
 ```
 
+```{r, include=FALSE}
+plot_ly(x = c(20, 14, 23), y = c('giraffes', 'orangutans', 'monkeys'), type = 'bar', orientation = 'h')
+```
 
 # 1. Frecuencia de edad
 ```{r ,echo=FALSE}
-plot_ly(y = ~dataset$EDAD, type = "histogram")
+less20 <- subset(dataset, dataset$EDAD <20)
+between20n40 <- subset(dataset, dataset$EDAD >=20 & dataset$EDAD <40)
+between40n60 <- subset(dataset, dataset$EDAD >=40 & dataset$EDAD <60)
+between60n80 <- subset(dataset, dataset$EDAD >=60 & dataset$EDAD <80)
+more80 <- subset(dataset, dataset$EDAD >80)
+
+
+plot_ly(alpha = 0.6) %>%
+  add_histogram(x = less20$EDAD, name = "Less than 20") %>%
+  add_histogram(x = between20n40$EDAD, name = "20 and 40") %>%
+  add_histogram(x = between40n60$EDAD, name = "40 and 60") %>%
+  add_histogram(x = between60n80$EDAD, name = "60 and 80") %>%
+  add_histogram(x = more80$EDAD, name = "more than 80") %>%
+layout(barmode = "group", title = "",orientation="h")
+
 
 ```
 
