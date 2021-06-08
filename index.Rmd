@@ -2,7 +2,9 @@
 title: "Graphs"
 author: "Grupo 4"
 date: "2021"
-output: html_document
+output: 
+  html_document: 
+  css: bootstrap.min.css
 ---
 
 
@@ -28,11 +30,11 @@ more80 <- subset(dataset, dataset$EDAD >80)
 
 
 plot_ly(alpha = 0.7, orientation = 'h') %>%
+  add_histogram(y = more80$EDAD, name = "More than 80") %>%
+  add_histogram(y = between60n80$EDAD, name = "Between 60 and 80") %>%
+  add_histogram(y = between40n60$EDAD, name = "Between 40 and 60") %>%
+  add_histogram(y = between20n40$EDAD, name = "Between 20 and 40") %>%
   add_histogram(y = less20$EDAD, name = "Less than 20") %>%
-  add_histogram(y = between20n40$EDAD, name = "20 and 40") %>%
-  add_histogram(y = between40n60$EDAD, name = "40 and 60") %>%
-  add_histogram(y = between60n80$EDAD, name = "60 and 80") %>%
-  add_histogram(y = more80$EDAD, name = "more than 80") %>%
 layout(barmode = "group", title = "",orientation="h")
 
 
