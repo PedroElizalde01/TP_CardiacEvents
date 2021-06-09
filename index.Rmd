@@ -10,6 +10,7 @@ output:
 
 ---
 
+
 ```{r setup, include=FALSE}
 
 #azul RGB: (31, 119, 180)
@@ -43,11 +44,11 @@ between60n80 <- subset(dataset, dataset$EDAD >=60 & dataset$EDAD <80)
 more80 <- subset(dataset, dataset$EDAD >=80)
 
 plot_ly(alpha = 0.7, orientation = 'h') %>%
-  add_histogram(y = more80$EDAD, name = "More than 80", marker = list(color ='rgba(31,119,180,1)')) %>%
-  add_histogram(y = between60n80$EDAD, name = "Between 60 and 79", marker = list(color ='rgba(105,122,125,1)')) %>%
-  add_histogram(y = between40n60$EDAD, name = "Between 40 and 59", marker = list(color ='rgba(183,124,67,1)')) %>%
-  add_histogram(y = between20n40$EDAD, name = "Between 20 and 39", marker = list(color ='rgba(183,124,67,1)')) %>%
-  add_histogram(y = less20$EDAD, name = "Less than 20", marker = list(color ='rgba(255,127,14,1)')) %>%
+  add_histogram(y = more80$EDAD, name = "More than 80", marker = list(color ='rgba(18,61,92,1)')) %>%
+  add_histogram(y = between60n80$EDAD, name = "Between 60 and 79", marker = list(color ='rgba(25,90,136,1)')) %>%
+  add_histogram(y = between40n60$EDAD, name = "Between 40 and 59", marker = list(color ='rgba(31,119,180,1)')) %>%
+  add_histogram(y = between20n40$EDAD, name = "Between 20 and 39", marker = list(color ='rgba(43,147,219,1)')) %>%
+  add_histogram(y = less20$EDAD, name = "Less than 20", marker = list(color ='rgba(86,169,228,1)')) %>%
 layout(barmode = "group", title = "")
 
 
@@ -76,7 +77,7 @@ plot_ly(alpha = 0.6,
   add_histogram(x = dataset$PROCEDIMIENTO, text = "ANGIOPLASTIC") %>%
   layout(barmode = "group", title = "")
 ```
-#### Note: Due to the low quantity of patients in "Endoválvula" and "Cirugia,Endoválvula", we have decided not to include their data in our analysis 
+Note: Due to the low quantity of patients in "Endoválvula" and "Cirugia,Endoválvula", we have decided not to include their data in our analysis 
 
 
 # Interpretation
@@ -94,6 +95,7 @@ plot_ly(x = ~density1$x, y = density1$y*100, type = 'scatter', mode = 'lines', n
   add_trace(x = ~density2$x, y = density2$y*100, name = 'Women', fill = 'tozerox')%>% 
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
 ```
+This graph shows that the peak of ages of males and females in the dataset are both near 65 years.
 
 
 ### Procedure perfomed by risk factors
@@ -142,41 +144,38 @@ plot_ly()%>%
 ```
 
 ### Compromissed vessels by age and gender
-####### Men
+In males the peak of developing 1 or 2 compromised vessels is near the age of 70, whereas in females the peak of developing 1 or 2 compromised vessels is near the late 50’s. In the case of developing 3 compromised vessels in both males and females the peak is separated from 1 and 2 vessels curves. In females, this difference is greater than in males as the peak of developing 3 compromised vessels is near 75 years old. Another feature to notice is that the amount of males with 3 compromised is 30% times greater than females with 3 compromised vessels. This matches our previous analysis, where the male gender is considered as a risk factor to coronary disease. 
+
 ```{r ,echo=FALSE}
 menSubset <- dataset[which(dataset$SEXO == "MASC"),]
 
 vasos1mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronariopatia`=="1 vaso")$EDAD)
-
 vasos2mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronariopatia`=="2 vasos")$EDAD)
-
 vasos3mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronariopatia`=="3 vasos")$EDAD)
 
-plot_ly(x = ~vasos1mCoronarioDataset$x, y = ~vasos1mCoronarioDataset$y*100, type = 'scatter', mode = 'lines', name = '1 vaso', fill = 'tozeroy')%>% 
-  add_trace(x = ~vasos2mCoronarioDataset$x, y = ~vasos2mCoronarioDataset$y*100, name = '2 vasos', fill = 'tozeroy')%>%
-  add_trace(x = ~vasos3mCoronarioDataset$x, y = ~vasos3mCoronarioDataset$y*100, name = '3 vasos', fill = 'tozeroy')%>%
+fig1 <- plot_ly(x = ~vasos1mCoronarioDataset$x, y = ~vasos1mCoronarioDataset$y, type = 'scatter', mode = 'lines', name = '1 vaso', fill = 'tozeroy')%>% 
+  add_trace(x = ~vasos2mCoronarioDataset$x, y = ~vasos2mCoronarioDataset$y, name = '2 vasos', fill = 'tozeroy')%>%
+  add_trace(x = ~vasos3mCoronarioDataset$x, y = ~vasos3mCoronarioDataset$y, name = '3 vasos', fill = 'tozeroy')%>%
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
 
-```
-
-####### Women
-
-```{r ,echo=FALSE}
 womenSubset <- dataset[which(dataset$SEXO == "FEME"),]
 
 vasos1fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coronariopatia`=="1 vaso")$EDAD)
 vasos2fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coronariopatia`=="2 vasos")$EDAD)
 vasos3fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coronariopatia`=="3 vasos")$EDAD)
 
-plot_ly(x = ~vasos1fCoronarioDataset$x, y = ~vasos1fCoronarioDataset$y*100, type = 'scatter', mode = 'lines', name = '1 vaso', fill = 'tozeroy')%>% 
-  add_trace(x = ~vasos2fCoronarioDataset$x, y = ~vasos2fCoronarioDataset$y*100, name = '2 vasos', fill = 'tozeroy')%>%
-  add_trace(x = ~vasos3fCoronarioDataset$x, y = ~vasos3fCoronarioDataset$y*100, name = '3 vasos', fill = 'tozeroy')%>%
+fig2<-plot_ly(x = ~vasos1fCoronarioDataset$x, y = ~vasos1fCoronarioDataset$y, type = 'scatter', mode = 'lines', name = '1 vaso', fill = 'tozeroy')%>% 
+  add_trace(x = ~vasos2fCoronarioDataset$x, y = ~vasos2fCoronarioDataset$y, name = '2 vasos', fill = 'tozeroy')%>%
+  add_trace(x = ~vasos3fCoronarioDataset$x, y = ~vasos3fCoronarioDataset$y, name = '3 vasos', fill = 'tozeroy')%>%
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
+
+subplot(fig1,fig2)
+
 
 ```
 
 ### Development of compromised  vessels by angioplastied vessels
-
+This graph shows the amount of patients that had an angioplasty performed according to which of the vessels were compromised. This shows that the two most compromised vessels in angioplasty patients are DA and CD.
 ```{r ,echo=FALSE}
 angioDA <- subset(angioSubset, angioSubset$DA==1)
 angioCD <- subset(angioSubset,angioSubset$CD == 1)
