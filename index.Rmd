@@ -8,7 +8,7 @@ output:
     theme: lumen  
     highlight: null
     css: bootstrap.css
-    collapsed: false
+
 ---
 
 ```{r setup, include=FALSE}
@@ -37,12 +37,12 @@ between60n80 <- subset(dataset, dataset$EDAD >=60 & dataset$EDAD <80)
 more80 <- subset(dataset, dataset$EDAD >=80)
 
 plot_ly(alpha = 0.7, orientation = 'h') %>%
-  add_histogram(y = more80$EDAD, name = "More than 80") %>%
-  add_histogram(y = between60n80$EDAD, name = "Between 60 and 79") %>%
-  add_histogram(y = between40n60$EDAD, name = "Between 40 and 59") %>%
-  add_histogram(y = between20n40$EDAD, name = "Between 20 and 39") %>%
-  add_histogram(y = less20$EDAD, name = "Less than 20") %>%
-layout(barmode = "group", title = "",orientation="h")
+  add_histogram(y = more80$EDAD, name = "More than 80", marker = list(color ='rgba(31,119,180,1)')) %>%
+  add_histogram(y = between60n80$EDAD, name = "Between 60 and 79", marker = list(color ='rgba(105,122,125,1)')) %>%
+  add_histogram(y = between40n60$EDAD, name = "Between 40 and 59", marker = list(color ='rgba(183,124,67,1)')) %>%
+  add_histogram(y = between20n40$EDAD, name = "Between 20 and 39", marker = list(color ='rgba(243,127,23,1)')) %>%
+  add_histogram(y = less20$EDAD, name = "Less than 20", marker = list(color ='rgba(255,127,14,1)')) %>%
+layout(barmode = "group", title = "")
 
 
 ```
