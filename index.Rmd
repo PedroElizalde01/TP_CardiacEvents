@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "TP Cardiac Events"
 output: 
   html_document:
     toc: true
@@ -7,7 +7,6 @@ output:
     toc_float: true
     theme: lumen  
     highlight: null
-    css: bootstrap.css
 
 ---
 
@@ -23,12 +22,19 @@ library(plotly)
 dataset <- read_excel("C:/Users/Pedro/Desktop/dataset.xlsx")
 ```
 
-# TP Cardiac Events
+# Introduction
+
+In order to analyze the provided dataset, we first investigated scientific papers and several universities or research institutes to understand the information present in our data. We then proceeded to apply this knowledge and information in analyzing and interpreting the data to come with a predictor of coronary disease.
+
 
 
 # Data analysis
+In this section, we analyze the different factors that affect coronary disease patients in our dataset.
 
-### Age frequency
+### Age distribution
+In order to analyze age on the dataset, it was divided into five categories, within 20 year intervals. This factor is considered as a risk factor to coronary disease as from ages 40 to 45 depending on the patient's gender, the risk of developing coronary disease increases (Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009;302(21):2388. doi:10.1001/jama.302.21.2388). Link: https://jamanetwork.com/journals/jama/article-abstract/184989 
+
+
 ```{r ,echo=FALSE}
 less20 <- subset(dataset, dataset$EDAD <20)
 between20n40 <- subset(dataset, dataset$EDAD >=20 & dataset$EDAD <40)
@@ -47,7 +53,8 @@ layout(barmode = "group", title = "")
 
 ```
 
-### Gender
+### Gender distribution
+Patients admitted with coronary disease represent more than 80% of the dataset. Males are considered to have an increased risk in developing coronary disease (Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009;302(21):2388. doi:10.1001/jama.302.21.2388). Link: https://jamanetwork.com/journals/jama/article-abstract/184989 
 
 
 ```{r ,echo=FALSE}
@@ -58,7 +65,24 @@ plot_ly(dataset, labels = ~SEXO, type = 'pie', width = 1) %>%
 
 ```
 
-### Análisis de Relacion Edad - Sexo 
+## Procedure perfomed
+From the total of patients in the dataset, most of these had an angioplasty performed, whereas the other patients had a surgery performed. This shows relevant information in order to analyze a relationship between previous patients' conditions and the type of procedure performed.
+
+```{r ,echo=FALSE}
+dataset <- subset(dataset, dataset$PROCEDIMIENTO == "ANGIOPLASTIA" |dataset$PROCEDIMIENTO == "CIRUGIA")
+
+plot_ly(alpha = 0.6,
+        marker = list(color = c('rgba(31,119,180,1)', 'rgba(255,127,14,1)'))) %>%
+  add_histogram(x = dataset$PROCEDIMIENTO, text = "ANGIOPLASTIC") %>%
+  layout(barmode = "group", title = "")
+```
+#### Note: Due to the low quantity of patients in "Endoválvula" and "Cirugia,Endoválvula", we have decided not to include their data in our analysis 
+
+
+# Interpretation
+In this section we look forward to find relationships between different factors and obtain new data from them.
+
+### Age and Gender Relationship
 ```{r ,echo=FALSE}
 menSubset <- dataset[which(dataset$SEXO == "MASC"),]
 density1 <- density(menSubset$EDAD)
@@ -72,19 +96,8 @@ plot_ly(x = ~density1$x, y = density1$y*100, type = 'scatter', mode = 'lines', n
 ```
 
 
-
-### Frecuencia acumulada de procedimiento
-```{r ,echo=FALSE}
-dataset <- subset(dataset, dataset$PROCEDIMIENTO == "ANGIOPLASTIA" |dataset$PROCEDIMIENTO == "CIRUGIA")
-
-plot_ly(alpha = 0.6,
-        marker = list(color = c('rgba(31,119,180,1)', 'rgba(255,127,14,1)'))) %>%
-  add_histogram(x = dataset$PROCEDIMIENTO, text = "ANGIOPLASTIC") %>%
-  layout(barmode = "group", title = "")
-```
-#### Note: Due to the low quantity of patients in "Endoválvula" and "Cirugia,Endoválvula", we have decided not to include their data in our analysis 
-
-### Procedimiento según factor de riesgo
+### Procedure perfomed by risk factors
+We considered diabetes, EPOC and morbid obesity as risk factors as according to (Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009;302(21):2388. doi:10.1001/jama.302.21.2388). As shown in the graph there is a greater amount of patients with diabetes that had an angioplasty performed than diabetics that had a surgery performed. However, according to scientific papers where randomized trials were performed, diabetic patients had a better outcome with an angioplasty done rather than a surgery. This showed significantly reduced rates of death and myocardial infarction (Michael E. Farkouh, M.D.. Strategies for Multivessel Revascularization in Patients with Diabetes. The New England Journal of Medicine. 2012). Link: https://www.nejm.org/doi/10.1056/NEJMoa1211585 
 ```{r ,echo=FALSE}
 diabetes <- subset(dataset, dataset$DIABETES ==1)
 epoc  <- subset(dataset, dataset$EPOC ==1)
@@ -96,7 +109,8 @@ plot_ly(alpha = 0.6) %>%
   layout(barmode = "group", title = "")
 ```
 
-### Procedimiento según la cantidad de vasos
+### Procedure perfomed by amount of compromised vessels
+This graph shows that patien ts with one or two compromised vessels were more likely to have an angioplasty performed rather than a surgery in more than 80% of the cases. In patients with three compromised vessels were more likely to have a surgery rather than an angioplasty done in more than 60% of the cases. According to clinical trials, generally the increase of compromised vessels leads to perform a surgery on the patient, whereas patients with few compromised vessels taken into an angioplasty procedure. (William S. Weintraub, M.D.. Comparative Effectiveness of Revascularization Strategies. The New England Journal of Medicine. 2012.). Link: https://www.nejm.org/doi/full/10.1056/nejmoa1110717 
 
 ```{r ,echo=FALSE}
 cerovasos <- dataset[!complete.cases(dataset$`Resumen Coronariopatia`),]
@@ -112,7 +126,8 @@ plot_ly(alpha = 0.6) %>%
 layout(barmode = "group", title = "")
 ```
 
-### Intervensión previa de ingresados
+### Patients by previous intervention
+According to scientific investigations, patients that had an angioplasty performed have a higher probability to need further interventions than patients that had a surgery performed. According to the dataset, there is no information about future complications or interventions. Instead, we divided patients who had an angioplasty performed and a surgery performed and observed the amount of patients that had previous interventions. In the case of patients who had an angioplasty, more than 40% of patients had an angioplasty done before. In the case of patients with a surgery performed, only 7% of patients had an angioplasty before. This is relevant information to know, as it gives the possibility to know either the patient will develop complications or will need further interventions. (Christian W. Hamn, M.D.. A randomized study of coronary angioplasty compared with bypass surgery in patients with symptomatic multivessel coronary disease. The New England Journal of Medicine. 1994.). LInk: https://www.nejm.org/doi/pdf/10.1056/NEJM199410203311601 
 ```{r ,echo=FALSE}
 angioSubset <- subset(dataset, dataset$PROCEDIMIENTO == "ANGIOPLASTIA")
 cirugiaSubset<- subset(dataset, dataset$PROCEDIMIENTO == "CIRUGIA")
@@ -126,8 +141,8 @@ plot_ly()%>%
 
 ```
 
-### Vasos que desarrolla según sexo y edad
-####### Hombres
+### Compromissed vessels by age and gender
+####### Men
 ```{r ,echo=FALSE}
 menSubset <- dataset[which(dataset$SEXO == "MASC"),]
 
@@ -144,7 +159,7 @@ plot_ly(x = ~vasos1mCoronarioDataset$x, y = ~vasos1mCoronarioDataset$y*100, type
 
 ```
 
-####### Mujeres
+####### Women
 
 ```{r ,echo=FALSE}
 womenSubset <- dataset[which(dataset$SEXO == "FEME"),]
@@ -160,7 +175,8 @@ plot_ly(x = ~vasos1fCoronarioDataset$x, y = ~vasos1fCoronarioDataset$y*100, type
 
 ```
 
-### Frecuencia de desarrollo de vasos según angioplastiados
+### Development of compromised  vessels by angioplastied vessels
+
 ```{r ,echo=FALSE}
 angioDA <- subset(angioSubset, angioSubset$DA==1)
 angioCD <- subset(angioSubset,angioSubset$CD == 1)
@@ -176,7 +192,6 @@ layout(barmode = "group", title = "")
 
 ```
 
-# Interpretation
-
+ 
 
 # Predictor
