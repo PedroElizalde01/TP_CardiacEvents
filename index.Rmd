@@ -20,6 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(readxl)
 library(plotly)
 
+
 dataset <- read_excel("C:/Users/Pedro/Desktop/dataset.xlsx")
 ```
 
@@ -148,25 +149,25 @@ In males the peak of developing 1 or 2 compromised vessels is near the age of 70
 
 ```{r ,echo=FALSE}
 menSubset <- dataset[which(dataset$SEXO == "MASC"),]
-
 vasos1mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronariopatia`=="1 vaso")$EDAD)
 vasos2mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronariopatia`=="2 vasos")$EDAD)
 vasos3mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronariopatia`=="3 vasos")$EDAD)
 
-fig1 <- plot_ly(x = ~vasos1mCoronarioDataset$x, y = ~vasos1mCoronarioDataset$y, type = 'scatter', mode = 'lines', name = '1 vaso', fill = 'tozeroy')%>% 
-  add_trace(x = ~vasos2mCoronarioDataset$x, y = ~vasos2mCoronarioDataset$y, name = '2 vasos', fill = 'tozeroy')%>%
-  add_trace(x = ~vasos3mCoronarioDataset$x, y = ~vasos3mCoronarioDataset$y, name = '3 vasos', fill = 'tozeroy')%>%
+fig1 <- plot_ly(x = ~vasos1mCoronarioDataset$x, y = ~vasos1mCoronarioDataset$y*2608.820422, type = 'scatter', mode = 'lines', name = '1 vaso', fill = 'tozeroy')%>% 
+  add_trace(x = ~vasos2mCoronarioDataset$x, y = ~vasos2mCoronarioDataset$y*2608.820422, name = '2 vasos', fill = 'tozeroy')%>%
+  add_trace(x = ~vasos3mCoronarioDataset$x, y = ~vasos3mCoronarioDataset$y*2608.820422, name = '3 vasos', fill = 'tozeroy')%>%
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
 
-womenSubset <- dataset[which(dataset$SEXO == "FEME"),]
 
+womenSubset <- dataset[which(dataset$SEXO == "FEME"),]
 vasos1fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coronariopatia`=="1 vaso")$EDAD)
 vasos2fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coronariopatia`=="2 vasos")$EDAD)
 vasos3fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coronariopatia`=="3 vasos")$EDAD)
 
-fig2<-plot_ly(x = ~vasos1fCoronarioDataset$x, y = ~vasos1fCoronarioDataset$y, type = 'scatter', mode = 'lines', name = '1 vaso', fill = 'tozeroy')%>% 
-  add_trace(x = ~vasos2fCoronarioDataset$x, y = ~vasos2fCoronarioDataset$y, name = '2 vasos', fill = 'tozeroy')%>%
-  add_trace(x = ~vasos3fCoronarioDataset$x, y = ~vasos3fCoronarioDataset$y, name = '3 vasos', fill = 'tozeroy')%>%
+fig2<-plot_ly(type = 'scatter', mode = 'lines', showlegend=FALSE)%>% 
+  add_trace(x = ~vasos1fCoronarioDataset$x, y = ~vasos1fCoronarioDataset$y*2019.196093, name = '1 vaso', fill = 'tozeroy', marker = list(color = 'rgba(31,119,180,1)'))%>%
+  add_trace(x = ~vasos2fCoronarioDataset$x, y = ~vasos2fCoronarioDataset$y*2019.196093, name = '2 vasos', fill = 'tozeroy', marker = list(color = 'rgba(255,127,14,1)'))%>%
+  add_trace(x = ~vasos3fCoronarioDataset$x, y = ~vasos3fCoronarioDataset$y*2019.196093, name = '3 vasos', fill = 'tozeroy', marker = list(color = 'rgba(44,160,44,1)'))%>%
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
 
 subplot(fig1,fig2)
