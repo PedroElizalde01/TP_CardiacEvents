@@ -40,7 +40,7 @@ plot_ly(alpha = 0.7, orientation = 'h') %>%
   add_histogram(y = more80$EDAD, name = "More than 80", marker = list(color ='rgba(31,119,180,1)')) %>%
   add_histogram(y = between60n80$EDAD, name = "Between 60 and 79", marker = list(color ='rgba(105,122,125,1)')) %>%
   add_histogram(y = between40n60$EDAD, name = "Between 40 and 59", marker = list(color ='rgba(183,124,67,1)')) %>%
-  add_histogram(y = between20n40$EDAD, name = "Between 20 and 39", marker = list(color ='rgba(243,127,23,1)')) %>%
+  add_histogram(y = between20n40$EDAD, name = "Between 20 and 39", marker = list(color ='rgba(183,124,67,1)')) %>%
   add_histogram(y = less20$EDAD, name = "Less than 20", marker = list(color ='rgba(255,127,14,1)')) %>%
 layout(barmode = "group", title = "")
 
@@ -48,7 +48,7 @@ layout(barmode = "group", title = "")
 ```
 
 ### Gender
-Many studies from different organizations such as (poner paper) have discovered
+
 
 ```{r ,echo=FALSE}
 plot_ly(dataset, labels = ~SEXO, type = 'pie', width = 1) %>%
@@ -78,8 +78,7 @@ plot_ly(x = ~density1$x, y = density1$y*100, type = 'scatter', mode = 'lines', n
 dataset <- subset(dataset, dataset$PROCEDIMIENTO == "ANGIOPLASTIA" |dataset$PROCEDIMIENTO == "CIRUGIA")
 
 plot_ly(alpha = 0.6,
-        marker = list(color = c('rgba(0,48,94,0.7)', 'rgba(221,117,0,0.7)',
-                                'rgba(204,204,204,0.7)', 'rgba(1,6,132,0.7)'))) %>%
+        marker = list(color = c('rgba(31,119,180,1)', 'rgba(255,127,14,1)'))) %>%
   add_histogram(x = dataset$PROCEDIMIENTO, text = "ANGIOPLASTIC") %>%
   layout(barmode = "group", title = "")
 ```
@@ -91,9 +90,9 @@ diabetes <- subset(dataset, dataset$DIABETES ==1)
 epoc  <- subset(dataset, dataset$EPOC ==1)
 obesidadMor <- subset(dataset, dataset$`OBESIDAD MORBIDA` == 1)
 plot_ly(alpha = 0.6) %>%
-  add_histogram(x = diabetes$PROCEDIMIENTO, name = "Diabetes") %>%
-  add_histogram(x = epoc$PROCEDIMIENTO, name = "EPOC") %>%
-  add_histogram(x = obesidadMor$PROCEDIMIENTO, name = "Obesidad Morbida") %>%
+  add_histogram(x = diabetes$PROCEDIMIENTO, name = "Diabetes",marker = list(color = 'rgba(31,119,180,1)')) %>%
+  add_histogram(x = epoc$PROCEDIMIENTO, name = "EPOC",marker = list(color = 'rgba(183,124,67,1)')) %>%
+  add_histogram(x = obesidadMor$PROCEDIMIENTO, name = "Obesidad Morbida",marker = list(color = 'rgba(255,127,14,1)')) %>%
   layout(barmode = "group", title = "")
 ```
 
@@ -106,10 +105,10 @@ dosVasos <- subset(dataset, dataset$`Resumen Coronariopatia` == "2 vasos")
 tresVasos <- subset(dataset, dataset$`Resumen Coronariopatia` == "3 vasos")
 
 plot_ly(alpha = 0.6) %>%
-  add_histogram(x = cerovasos$PROCEDIMIENTO, name = "Cero Vasos") %>%
-  add_histogram(x = unVaso$PROCEDIMIENTO, name = "Un Vaso") %>%
-  add_histogram(x = dosVasos$PROCEDIMIENTO, name = "Dos Vasos") %>%
-  add_histogram(x = tresVasos$PROCEDIMIENTO, name = "Tres Vasos") %>%
+  add_histogram(x = cerovasos$PROCEDIMIENTO, name = "Cero Vasos", marker = list(color = 'rgba(31,119,180,1)')) %>%
+  add_histogram(x = unVaso$PROCEDIMIENTO, name = "Un Vaso", marker = list(color = 'rgba(105,122,125,1)')) %>%
+  add_histogram(x = dosVasos$PROCEDIMIENTO, name = "Dos Vasos", marker = list(color = 'rgba(183,124,67,1)')) %>%
+  add_histogram(x = tresVasos$PROCEDIMIENTO, name = "Tres Vasos", marker = list(color = 'rgba(255,127,14,1)')) %>%
 layout(barmode = "group", title = "")
 ```
 
