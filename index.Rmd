@@ -5,16 +5,13 @@ output:
     toc: true
     toc_depth: 1
     toc_float: true
-    theme: lumen  
+    theme: lumen
     highlight: null
-
+    css: bootstrap.css
 ---
-
 
 ```{r setup, include=FALSE}
 
-#azul RGB: (31, 119, 180)
-#naranja RGB: (255, 127, 14)
 
 knitr::opts_chunk$set(echo = TRUE)
 library(readxl)
@@ -24,17 +21,71 @@ library(plotly)
 dataset <- read_excel("C:/Users/Pedro/Desktop/dataset.xlsx")
 ```
 
-# Introduction
+```{css, echo=FALSE}
+<style>
 
-In order to analyze the provided dataset, we first investigated scientific papers and several universities or research institutes to understand the information present in our data. We then proceeded to apply this knowledge and information in analyzing and interpreting the data to come with a predictor of coronary disease.
+body {
+  font-family: Arial;
+  margin: 0;
+}
+
+.header1 {
+  padding: 30px;
+  text-align: left;
+  background: #02262e;
+  color: white;
+  font-size: 30px;
+}
+
+.header2 {
+  padding: 30px;
+  text-align: left;
+  background: #005063;
+  color: white;
+  font-size: 30px;
+}
+
+.header3 {
+  padding: 30px;
+  text-align: left;
+  background: #00abb1;
+  color: white;
+  font-size: 30px;
+}
+
+.header4 {
+  padding: 30px;
+  text-align: left;
+  background: #99e4db;
+  color: white;
+  font-size: 30px;
+}
 
 
+.content {padding:20px;}
+</style>
+```
 
-# Data analysis
-In this section, we analyze the different factors that affect coronary disease patients in our dataset.
+<body>
+<div class="header1">
+  <p> Introduction </p>
+</div>
+</body>
 
+<div class="content">
+<p> In order to analyze the provided dataset, we first investigated scientific papers and several universities or research institutes to understand the information present in our data. We then proceeded to apply this knowledge and information in analyzing and interpreting the data to come with a predictor of coronary disease. </p>
+</div>
+
+
+<div class="header2">
+  <p> Data analysis </p>
+</div>
+
+<div class="content">
+ In this section, we analyze the different factors that affect coronary disease patients in our dataset.
+ 
 ### Age distribution
-In order to analyze age on the dataset, it was divided into five categories, within 20 year intervals. This factor is considered as a risk factor to coronary disease as from ages 40 to 45 depending on the patient's gender, the risk of developing coronary disease increases (Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009;302(21):2388. doi:10.1001/jama.302.21.2388). Link: https://jamanetwork.com/journals/jama/article-abstract/184989 
+In order to analyze age on the dataset, it was divided into five categories, within 20 year intervals. This factor is considered as a risk factor to coronary disease as from ages 40 to 45 depending on the patient's gender, the risk of developing coronary disease increases (Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009;302(21):2388. doi: 10.1001/jama.302.21.2388). Link: https://jamanetwork.com/journals/jama/article-abstract/184989 
 
 
 ```{r ,echo=FALSE}
@@ -45,18 +96,18 @@ between60n80 <- subset(dataset, dataset$EDAD >=60 & dataset$EDAD <80)
 more80 <- subset(dataset, dataset$EDAD >=80)
 
 plot_ly(alpha = 0.7, orientation = 'h') %>%
-  add_histogram(y = more80$EDAD, name = "More than 80", marker = list(color ='rgba(18,61,92,1)')) %>%
-  add_histogram(y = between60n80$EDAD, name = "Between 60 and 79", marker = list(color ='rgba(25,90,136,1)')) %>%
-  add_histogram(y = between40n60$EDAD, name = "Between 40 and 59", marker = list(color ='rgba(31,119,180,1)')) %>%
-  add_histogram(y = between20n40$EDAD, name = "Between 20 and 39", marker = list(color ='rgba(43,147,219,1)')) %>%
-  add_histogram(y = less20$EDAD, name = "Less than 20", marker = list(color ='rgba(86,169,228,1)')) %>%
+  add_histogram(y = more80$EDAD, name = "More than 80", marker = list(color ='rgba(2,38,46,1)')) %>%
+  add_histogram(y = between60n80$EDAD, name = "Between 60 and 79", marker = list(color ='rgba(0,80,99,1)')) %>%
+  add_histogram(y = between40n60$EDAD, name = "Between 40 and 59", marker = list(color ='rgba(0,172,177,1)')) %>%
+  add_histogram(y = between20n40$EDAD, name = "Between 20 and 39", marker = list(color ='rgba(152,228,219,1)')) %>%
+  add_histogram(y = less20$EDAD, name = "Less than 20", marker = list(color ='rgba(202,240,193,1)')) %>%
 layout(barmode = "group", title = "")
 
 
 ```
 
 ### Gender distribution
-Patients admitted with coronary disease represent more than 80% of the dataset. Males are considered to have an increased risk in developing coronary disease (Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009;302(21):2388. doi:10.1001/jama.302.21.2388). Link: https://jamanetwork.com/journals/jama/article-abstract/184989 
+Patients admitted with coronary disease represent more than 80% of the dataset. Males are considered to have an increased risk in developing coronary disease (Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009;302(21):2388. doi: 10.1001/jama.302.21.2388). Link: https://jamanetwork.com/journals/jama/article-abstract/184989 
 
 
 ```{r ,echo=FALSE}
@@ -80,8 +131,14 @@ plot_ly(alpha = 0.6,
 ```
 Note: Due to the low quantity of patients in "Endoválvula" and "Cirugia,Endoválvula", we have decided not to include their data in our analysis 
 
+</div>
 
-# Interpretation
+<div class="header3">
+  <p> Interpretation </p>
+</div>
+
+<div class="content">
+
 In this section we look forward to find relationships between different factors and obtain new data from them.
 
 ### Age and Gender Relationship
@@ -92,23 +149,23 @@ density1 <- density(menSubset$EDAD)
 womenSubset <- dataset[which(dataset$SEXO == "FEME"),]
 density2 <- density(womenSubset$EDAD)
 
-plot_ly(x = ~density1$x, y = density1$y*100, type = 'scatter', mode = 'lines', name = 'Men', fill = 'tozerox')%>% 
-  add_trace(x = ~density2$x, y = density2$y*100, name = 'Women', fill = 'tozerox')%>% 
+plot_ly(x = ~density1$x, y = density1$y*2968.289173, type = 'scatter', mode = 'lines', name = 'Men', fill = 'tozerox')%>% 
+  add_trace(x = ~density2$x, y = density2$y*2968.289173, name = 'Women', fill = 'tozerox')%>% 
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
 ```
 This graph shows that the peak of ages of males and females in the dataset are both near 65 years.
 
 
 ### Procedure perfomed by risk factors
-We considered diabetes, EPOC and morbid obesity as risk factors as according to (Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009;302(21):2388. doi:10.1001/jama.302.21.2388). As shown in the graph there is a greater amount of patients with diabetes that had an angioplasty performed than diabetics that had a surgery performed. However, according to scientific papers where randomized trials were performed, diabetic patients had a better outcome with an angioplasty done rather than a surgery. This showed significantly reduced rates of death and myocardial infarction (Michael E. Farkouh, M.D.. Strategies for Multivessel Revascularization in Patients with Diabetes. The New England Journal of Medicine. 2012). Link: https://www.nejm.org/doi/10.1056/NEJMoa1211585 
+We considered diabetes, EPOC and morbid obesity as risk factors as according to (Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009;302(21):2388. doi: 10.1001/jama.302.21.2388). As shown in the graph there is a greater amount of patients with diabetes that had an angioplasty performed than diabetics that had a surgery performed. However, according to scientific papers where randomized trials were performed, diabetic patients had a better outcome with an angioplasty done rather than a surgery. This showed significantly reduced rates of death and myocardial infarction (Michael E. Farkouh, M.D.. Strategies for Multivessel Revascularization in Patients with Diabetes. The New England Journal of Medicine. 2012). Link: https://www.nejm.org/doi/10.1056/NEJMoa1211585 
 ```{r ,echo=FALSE}
 diabetes <- subset(dataset, dataset$DIABETES ==1)
 epoc  <- subset(dataset, dataset$EPOC ==1)
 obesidadMor <- subset(dataset, dataset$`OBESIDAD MORBIDA` == 1)
 plot_ly(alpha = 0.6) %>%
-  add_histogram(x = diabetes$PROCEDIMIENTO, name = "Diabetes",marker = list(color = 'rgba(31,119,180,1)')) %>%
-  add_histogram(x = epoc$PROCEDIMIENTO, name = "EPOC",marker = list(color = 'rgba(183,124,67,1)')) %>%
-  add_histogram(x = obesidadMor$PROCEDIMIENTO, name = "Obesidad Morbida",marker = list(color = 'rgba(255,127,14,1)')) %>%
+  add_histogram(x = diabetes$PROCEDIMIENTO, name = "Diabetes",marker = list(color = 'rgba(0,80,99,1)')) %>%
+  add_histogram(x = epoc$PROCEDIMIENTO, name = "EPOC",marker = list(color = 'rgba(0,172,177,1)')) %>%
+  add_histogram(x = obesidadMor$PROCEDIMIENTO, name = "Obesidad Morbida",marker = list(color = 'rgba(153,228,219,1)')) %>%
   layout(barmode = "group", title = "")
 ```
 
@@ -122,10 +179,10 @@ dosVasos <- subset(dataset, dataset$`Resumen Coronariopatia` == "2 vasos")
 tresVasos <- subset(dataset, dataset$`Resumen Coronariopatia` == "3 vasos")
 
 plot_ly(alpha = 0.6) %>%
-  add_histogram(x = cerovasos$PROCEDIMIENTO, name = "Cero Vasos", marker = list(color = 'rgba(31,119,180,1)')) %>%
-  add_histogram(x = unVaso$PROCEDIMIENTO, name = "Un Vaso", marker = list(color = 'rgba(105,122,125,1)')) %>%
-  add_histogram(x = dosVasos$PROCEDIMIENTO, name = "Dos Vasos", marker = list(color = 'rgba(183,124,67,1)')) %>%
-  add_histogram(x = tresVasos$PROCEDIMIENTO, name = "Tres Vasos", marker = list(color = 'rgba(255,127,14,1)')) %>%
+  add_histogram(x = cerovasos$PROCEDIMIENTO, name = "Cero Vasos", marker = list(color = 'rgba(0,80,99,1)')) %>%
+  add_histogram(x = unVaso$PROCEDIMIENTO, name = "Un Vaso", marker = list(color = 'rgba(0,172,177,1)')) %>%
+  add_histogram(x = dosVasos$PROCEDIMIENTO, name = "Dos Vasos", marker = list(color = 'rgba(153,228,219,1)')) %>%
+  add_histogram(x = tresVasos$PROCEDIMIENTO, name = "Tres Vasos", marker = list(color = 'rgba(202,240,193,1)')) %>%
 layout(barmode = "group", title = "")
 ```
 
@@ -170,7 +227,9 @@ fig2<-plot_ly(type = 'scatter', mode = 'lines', showlegend=FALSE)%>%
   add_trace(x = ~vasos3fCoronarioDataset$x, y = ~vasos3fCoronarioDataset$y*2019.196093, name = '3 vasos', fill = 'tozeroy', marker = list(color = 'rgba(44,160,44,1)'))%>%
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
 
-subplot(fig1,fig2)
+fig1
+
+fig2
 
 
 ```
@@ -184,14 +243,19 @@ angioCDPROX <- subset(angioSubset,angioSubset$CDPROXIMAL == 1)
 angioCXPROX <- subset(angioSubset,angioSubset$CXPROXIMAL == 1)
 
 plot_ly(alpha = 0.6) %>%
-  add_histogram(x = angioDA$PROCEDIMIENTO, name = "DA") %>%
-  add_histogram(x = angioCD$PROCEDIMIENTO, name = "CD") %>%
-  add_histogram(x = angioCDPROX$PROCEDIMIENTO, name = "CD PROXIMAL") %>%
-  add_histogram(x = angioCXPROX$PROCEDIMIENTO, name = "CX PROXIMAL") %>%
+  add_histogram(x = angioDA$PROCEDIMIENTO, name = "DA", marker = list(color = 'rgba(0,80,99,1)')) %>%
+  add_histogram(x = angioCD$PROCEDIMIENTO, name = "CD", marker = list(color = 'rgba(0,172,177,1)')) %>%
+  add_histogram(x = angioCDPROX$PROCEDIMIENTO, name = "CD PROXIMAL", marker=list(color='rgba(153,228,219,1)')) %>%
+  add_histogram(x = angioCXPROX$PROCEDIMIENTO, name = "CX PROXIMAL", marker=list(color='rgba(202,240,193,1)'))%>%
 layout(barmode = "group", title = "")
 
 ```
+</div>
 
- 
+<div class="header4">
+  <p> Predictor </p>
+</div>
 
-# Predictor
+<div class="content">
+
+</div>
