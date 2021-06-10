@@ -1,5 +1,5 @@
 ---
-title: "TP Cardiac Events"
+title: "Coronary Problems Predictor"
 output: 
   html_document:
     theme: cosmo
@@ -51,7 +51,7 @@ body {
 .content {padding:20px;}
 </style>
 ```
-
+</div>
 <a name="intro"><a/>
 <div class="header1">
 <h1> Introduction </h1>
@@ -79,7 +79,7 @@ between40n60 <- subset(dataset, dataset$EDAD >=40 & dataset$EDAD <60)
 between60n80 <- subset(dataset, dataset$EDAD >=60 & dataset$EDAD <80)
 more80 <- subset(dataset, dataset$EDAD >=80)
 
-plot_ly(alpha = 0.7, orientation = 'h',width = 690, height = 550) %>%
+plot_ly(alpha = 0.7, orientation = 'h',width = 1120, height = 550) %>%
   add_histogram(y = more80$EDAD, name = "More than 80", marker = list(color ='rgba(2,38,46,1)')) %>%
   add_histogram(y = between60n80$EDAD, name = "Between 60 and 79", marker = list(color ='rgba(0,80,99,1)')) %>%
   add_histogram(y = between40n60$EDAD, name = "Between 40 and 59", marker = list(color ='rgba(0,172,177,1)')) %>%
@@ -100,7 +100,7 @@ layout(barmode = "group", title = "", xaxis = list(title="Amount of patients"), 
 
 
 ```{r ,echo=FALSE}
-plot_ly(dataset, labels = ~SEXO, type = 'pie',width = 690, height = 500) %>%
+plot_ly(dataset, labels = ~SEXO, type = 'pie',width = 1120, height = 500) %>%
   layout(title = '',
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
@@ -117,7 +117,7 @@ plot_ly(dataset, labels = ~SEXO, type = 'pie',width = 690, height = 500) %>%
 dataset <- subset(dataset, dataset$PROCEDIMIENTO == "ANGIOPLASTIA" | dataset$PROCEDIMIENTO == "CIRUGIA")
 
 plot_ly(alpha = 0.6,
-        marker = list(color = c('rgba(0,80,99,1)', 'rgba(0,172,177,1)'), name = c("Angioplasty","Surgery")),width = 690, height = 500) %>%
+        marker = list(color = c('rgba(0,80,99,1)', 'rgba(0,172,177,1)'), name = c("Angioplasty","Surgery")),width = 1120, height = 500) %>%
   add_histogram(x = dataset$PROCEDIMIENTO) %>%
   layout(barmode = "group", title = "", yaxis = list(title="Amount of patients"))
 ```
@@ -144,7 +144,7 @@ density1 <- density(menSubset$EDAD)
 womenSubset <- dataset[which(dataset$SEXO == "FEME"),]
 density2 <- density(womenSubset$EDAD)
 
-plot_ly(x = ~density1$x, y = density1$y*2968.289173, type = 'scatter', mode = 'lines', name = 'Men', fill = 'tozerox',width = 690, height = 500)%>% 
+plot_ly(x = ~density1$x, y = density1$y*2968.289173, type = 'scatter', mode = 'lines', name = 'Men', fill = 'tozerox',width = 1120, height = 500)%>% 
   add_trace(x = ~density2$x, y = density2$y*2968.289173, name = 'Women', fill = 'tozerox')%>% 
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
 ```
@@ -159,7 +159,7 @@ plot_ly(x = ~density1$x, y = density1$y*2968.289173, type = 'scatter', mode = 'l
 diabetes <- subset(dataset, dataset$DIABETES ==1)
 epoc  <- subset(dataset, dataset$EPOC ==1)
 obesidadMor <- subset(dataset, dataset$`OBESIDAD MORBIDA` == 1)
-plot_ly(alpha = 0.6,width = 690, height = 500) %>%
+plot_ly(alpha = 0.6,width = 1120, height = 500) %>%
   add_histogram(x = diabetes$PROCEDIMIENTO, name = "Diabetics",marker = list(color = 'rgba(0,80,99,1)')) %>%
   add_histogram(x = epoc$PROCEDIMIENTO, name = "EPOC",marker = list(color = 'rgba(0,172,177,1)')) %>%
   add_histogram(x = obesidadMor$PROCEDIMIENTO, name = "Obesity",marker = list(color = 'rgba(153,228,219,1)')) %>%
@@ -179,7 +179,7 @@ unVaso <- subset(dataset, dataset$`Resumen Coronariopatia` == "1 vaso")
 dosVasos <- subset(dataset, dataset$`Resumen Coronariopatia` == "2 vasos")
 tresVasos <- subset(dataset, dataset$`Resumen Coronariopatia` == "3 vasos")
 
-plot_ly(alpha = 0.6,width = 690, height = 500) %>%
+plot_ly(alpha = 0.6,width = 1120, height = 500) %>%
   add_histogram(x = cerovasos$PROCEDIMIENTO, name = "Zero vessels", marker = list(color = 'rgba(0,80,99,1)')) %>%
   add_histogram(x = unVaso$PROCEDIMIENTO, name = "One vessel", marker = list(color = 'rgba(0,172,177,1)')) %>%
   add_histogram(x = dosVasos$PROCEDIMIENTO, name = "Two vessels", marker = list(color = 'rgba(153,228,219,1)')) %>%
@@ -197,7 +197,7 @@ layout(barmode = "group", title = "", yaxis = list(title="Amount of patients"))
 angioSubset <- subset(dataset, dataset$PROCEDIMIENTO == "ANGIOPLASTIA")
   cirugiaSubset<- subset(dataset, dataset$PROCEDIMIENTO == "CIRUGIA")
 
-plot_ly(width = 690, height = 500)%>%
+plot_ly(width = 1120, height = 500)%>%
   add_pie(labels = angioSubset$`INTERVENCION PREVIA`, values = angioSubset, domain = list(x = c(0, 0.4), y = c(0.5)), name = "Angioplasty",title = "Angioplasty
           ")%>%
   add_pie(labels = cirugiaSubset$`INTERVENCION PREVIA`, values = cirugiaSubset, domain = list(x = c(0.6, 1), y = c(0.5)), name = "Surgery",title = "Surgery
@@ -220,7 +220,7 @@ vasos1mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronari
 vasos2mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronariopatia`=="2 vasos")$EDAD)
 vasos3mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronariopatia`=="3 vasos")$EDAD)
 
-fig1 <- plot_ly(x = ~vasos1mCoronarioDataset$x, y = ~vasos1mCoronarioDataset$y*2608.820422, type = 'scatter', mode = 'lines', name = '1 vessel', fill = 'tozeroy',width = 690, height = 500)%>% 
+fig1 <- plot_ly(x = ~vasos1mCoronarioDataset$x, y = ~vasos1mCoronarioDataset$y*2608.820422, type = 'scatter', mode = 'lines', name = '1 vessel', fill = 'tozeroy',width = 1120, height = 500)%>% 
   add_trace(x = ~vasos2mCoronarioDataset$x, y = ~vasos2mCoronarioDataset$y*2608.820422, name = '2 vessels', fill = 'tozeroy')%>%
   add_trace(x = ~vasos3mCoronarioDataset$x, y = ~vasos3mCoronarioDataset$y*2608.820422, name = '3 vessels', fill = 'tozeroy')%>%
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
@@ -231,7 +231,7 @@ vasos1fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coro
 vasos2fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coronariopatia`=="2 vasos")$EDAD)
 vasos3fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coronariopatia`=="3 vasos")$EDAD)
 
-fig2<-plot_ly(type = 'scatter', mode = 'lines', showlegend=FALSE,width = 690, height = 500)%>% 
+fig2<-plot_ly(type = 'scatter', mode = 'lines', showlegend=FALSE,width = 1120, height = 500)%>% 
   add_trace(x = ~vasos1fCoronarioDataset$x, y = ~vasos1fCoronarioDataset$y*2019.196093, name = '1 vaso', fill = 'tozeroy', line = list(color = 'rgba(31,119,180,1)'),fillcolor = 'rgba(31,119,180,0.5)')%>%
   add_trace(x = ~vasos2fCoronarioDataset$x, y = ~vasos2fCoronarioDataset$y*2019.196093, name = '2 vasos', fill = 'tozeroy', line = list(color = 'rgba(255,127,14,1)'),fillcolor = 'rgba(255,127,14,0.5)')%>%
   add_trace(x = ~vasos3fCoronarioDataset$x, y = ~vasos3fCoronarioDataset$y*2019.196093, name = '3 vasos', fill = 'tozeroy', line = list(color = 'rgba(44,160,44,1)'),fillcolor = 'rgba(44,160,44,0.5)')%>%
@@ -252,7 +252,7 @@ angioCD <- subset(angioSubset,angioSubset$CD == 1)
 angioCDPROX <- subset(angioSubset,angioSubset$CDPROXIMAL == 1)
 angioCXPROX <- subset(angioSubset,angioSubset$CXPROXIMAL == 1)
 
-plot_ly(alpha = 0.6,width = 690, height = 500) %>%
+plot_ly(alpha = 0.6,width = 1120, height = 500) %>%
   add_histogram(x = angioDA$PROCEDIMIENTO, name = "DA", marker = list(color = 'rgba(0,80,99,1)')) %>%
   add_histogram(x = angioCD$PROCEDIMIENTO, name = "CD", marker = list(color = 'rgba(0,172,177,1)')) %>%
   add_histogram(x = angioCDPROX$PROCEDIMIENTO, name = "CD PROXIMAL", marker=list(color='rgba(153,228,219,1)')) %>%
@@ -274,3 +274,22 @@ layout(barmode = "group", xaxis = list(visible=FALSE) , yaxis= list(title = 'Amo
 </div>
 </div><!--PREDICATOR HEADER-->
 </div><!--INTRODUCTION HEADER-->
+</div>
+<div class="header1">
+<div class="header2">
+  <h1> Authors </h1>
+<div class="content">
+<h3>
+* Jorge Suarez
+
+* Antonia Storni
+
+* Juan Cruz Estevez
+
+* Manuel Hernandez
+
+* Pedro Elizalde
+</h3>
+</div>
+</div><!--AUTHORS HEADER-->
+</div>
