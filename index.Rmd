@@ -2,9 +2,6 @@
 title: "TP Cardiac Events"
 output: 
   html_document:
-    toc: true
-    toc_depth: 1
-    toc_float: true
     theme: cosmo
 ---
 
@@ -16,9 +13,12 @@ library(plotly)
 dataset <- read_excel("C:/Users/Pedro/Desktop/dataset.xlsx")
 ```
 
+
 ```{css, echo=FALSE}
 <style>
-
+  
+  {data-background=#ff0000}
+    
 body {
   font-family: Arial;
   margin: 0;
@@ -43,42 +43,30 @@ body {
 .header3 {
   padding: 30px;
   text-align: left;
-  background: #00abb1;
-  color: white;
-  font-size: 30px;
-}
-
-.header4 {
-  padding: 30px;
-  text-align: left;
   background: #99e4db;
   color: #02262e;
   font-size: 30px;
 }
 
-
 .content {padding:20px;}
 </style>
 ```
 
-<body>
+<a name="intro"><a/>
 <div class="header1">
 <h1> Introduction </h1>
-</body>
 
 <div class="content">
  <h4>In order to analyze the provided dataset, we first investigated scientific papers and several universities or research institutes to understand the information present in our data. We then proceeded to apply this knowledge and information in analyzing and interpreting the data to come with a predictor of coronary disease.</h4>
 </div>
 
-
+<a name="data"><a/>
 <div class="header2">
   <h1> Data analysis </h1>
-
-
 <div class="content">
  <h4>In this section, we analyze the different factors that affect coronary disease patients in our dataset.</h4>
  
- <div class="header4">
+ <div class="header3">
 ## Age distribution
  <h4>In order to analyze age on the dataset, it was divided into five categories, within 20 year intervals. This factor is considered as a risk factor to coronary disease as from ages 40 to 45 depending on the patient's gender, the risk of developing coronary disease increases 
 <a href="https://jamanetwork.com/journals/jama/article-abstract/184989">(Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009)</a> </h4>
@@ -91,7 +79,7 @@ between40n60 <- subset(dataset, dataset$EDAD >=40 & dataset$EDAD <60)
 between60n80 <- subset(dataset, dataset$EDAD >=60 & dataset$EDAD <80)
 more80 <- subset(dataset, dataset$EDAD >=80)
 
-plot_ly(alpha = 0.7, orientation = 'h',width = 610, height = 550) %>%
+plot_ly(alpha = 0.7, orientation = 'h',width = 690, height = 550) %>%
   add_histogram(y = more80$EDAD, name = "More than 80", marker = list(color ='rgba(2,38,46,1)')) %>%
   add_histogram(y = between60n80$EDAD, name = "Between 60 and 79", marker = list(color ='rgba(0,80,99,1)')) %>%
   add_histogram(y = between40n60$EDAD, name = "Between 40 and 59", marker = list(color ='rgba(0,172,177,1)')) %>%
@@ -104,7 +92,7 @@ layout(barmode = "group", title = "", xaxis = list(title="Amount of patients"), 
 </div>
 <div class="header2">
 </div>
-<div class="header4">
+<div class="header3">
 ## Gender distribution
 
 <h4>Patients admitted with coronary disease represent more than 80% of the dataset. Males are considered to have an increased risk in developing coronary disease 
@@ -112,7 +100,7 @@ layout(barmode = "group", title = "", xaxis = list(title="Amount of patients"), 
 
 
 ```{r ,echo=FALSE}
-plot_ly(dataset, labels = ~SEXO, type = 'pie',width = 610, height = 500) %>%
+plot_ly(dataset, labels = ~SEXO, type = 'pie',width = 690, height = 500) %>%
   layout(title = '',
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
@@ -121,7 +109,7 @@ plot_ly(dataset, labels = ~SEXO, type = 'pie',width = 610, height = 500) %>%
 </div>
 <div class="header2">
 </div>
-<div class="header4">
+<div class="header3">
 ## Procedure perfomed
 <h4>From the total of patients in the dataset, most of these had an angioplasty performed, whereas the other patients had a surgery performed. This shows relevant information in order to analyze a relationship between previous patients' conditions and the type of procedure </h4>
 
@@ -129,7 +117,7 @@ plot_ly(dataset, labels = ~SEXO, type = 'pie',width = 610, height = 500) %>%
 dataset <- subset(dataset, dataset$PROCEDIMIENTO == "ANGIOPLASTIA" | dataset$PROCEDIMIENTO == "CIRUGIA")
 
 plot_ly(alpha = 0.6,
-        marker = list(color = c('rgba(0,80,99,1)', 'rgba(0,172,177,1)'), name = c("Angioplasty","Surgery")),width = 610, height = 500) %>%
+        marker = list(color = c('rgba(0,80,99,1)', 'rgba(0,172,177,1)'), name = c("Angioplasty","Surgery")),width = 690, height = 500) %>%
   add_histogram(x = dataset$PROCEDIMIENTO) %>%
   layout(barmode = "group", title = "", yaxis = list(title="Amount of patients"))
 ```
@@ -140,13 +128,14 @@ plot_ly(alpha = 0.6,
 </div><!--DATA ANALYSIS HEADER-->
 <div class="header1">
 </div>
+<a name="inter"><a/>
 <div class="header2">
   <h1> Interpretation </h1>
 
 <div class="content">
 
 <h4>In this section we look forward to find relationships between different factors and obtain new data from them.</h4>
-<div class="header4">
+<div class="header3">
 ## Age and Gender Relationship
 ```{r ,echo=FALSE}
 menSubset <- dataset[which(dataset$SEXO == "MASC"),]
@@ -155,7 +144,7 @@ density1 <- density(menSubset$EDAD)
 womenSubset <- dataset[which(dataset$SEXO == "FEME"),]
 density2 <- density(womenSubset$EDAD)
 
-plot_ly(x = ~density1$x, y = density1$y*2968.289173, type = 'scatter', mode = 'lines', name = 'Men', fill = 'tozerox',width = 610, height = 500)%>% 
+plot_ly(x = ~density1$x, y = density1$y*2968.289173, type = 'scatter', mode = 'lines', name = 'Men', fill = 'tozerox',width = 690, height = 500)%>% 
   add_trace(x = ~density2$x, y = density2$y*2968.289173, name = 'Women', fill = 'tozerox')%>% 
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
 ```
@@ -163,14 +152,14 @@ plot_ly(x = ~density1$x, y = density1$y*2968.289173, type = 'scatter', mode = 'l
 </div>
 <div class="header2">
 </div>
-<div class="header4">
+<div class="header3">
 ## Procedure perfomed by risk factors
 <h4>We considered diabetes, EPOC and morbid obesity as risk factors as according to (Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009;302(21):2388. doi: 10.1001/jama.302.21.2388). As shown in the graph there is a greater amount of patients with diabetes that had an angioplasty performed than diabetics that had a surgery performed. However, according to scientific papers where randomized trials were performed, diabetic patients had a better outcome with an angioplasty done rather than a surgery. This showed significantly reduced rates of death and myocardial infarction <a href="https://www.nejm.org/doi/10.1056/NEJMoa1211585">(Michael E. Farkouh, M.D.. Strategies for Multivessel Revascularization in Patients with Diabetes. The New England Journal of Medicine. 2012)</a></h4>
 ```{r ,echo=FALSE}
 diabetes <- subset(dataset, dataset$DIABETES ==1)
 epoc  <- subset(dataset, dataset$EPOC ==1)
 obesidadMor <- subset(dataset, dataset$`OBESIDAD MORBIDA` == 1)
-plot_ly(alpha = 0.6,width = 610, height = 500) %>%
+plot_ly(alpha = 0.6,width = 690, height = 500) %>%
   add_histogram(x = diabetes$PROCEDIMIENTO, name = "Diabetics",marker = list(color = 'rgba(0,80,99,1)')) %>%
   add_histogram(x = epoc$PROCEDIMIENTO, name = "EPOC",marker = list(color = 'rgba(0,172,177,1)')) %>%
   add_histogram(x = obesidadMor$PROCEDIMIENTO, name = "Obesity",marker = list(color = 'rgba(153,228,219,1)')) %>%
@@ -179,7 +168,7 @@ plot_ly(alpha = 0.6,width = 610, height = 500) %>%
 </div>
 <div class="header2">
 </div>
-<div class="header4">
+<div class="header3">
 
 ## Procedure perfomed by amount of compromised vessels
 <h4>This graph shows that patien ts with one or two compromised vessels were more likely to have an angioplasty performed rather than a surgery in more than 80% of the cases. In patients with three compromised vessels were more likely to have a surgery rather than an angioplasty done in more than 60% of the cases. According to clinical trials, generally the increase of compromised vessels leads to perform a surgery on the patient, whereas patients with few compromised vessels taken into an angioplasty procedure. <a href="https://www.nejm.org/doi/full/10.1056/nejmoa1110717">(William S. Weintraub, M.D.. Comparative Effectiveness of Revascularization Strategies. The New England Journal of Medicine. 2012)</a></h4>
@@ -190,7 +179,7 @@ unVaso <- subset(dataset, dataset$`Resumen Coronariopatia` == "1 vaso")
 dosVasos <- subset(dataset, dataset$`Resumen Coronariopatia` == "2 vasos")
 tresVasos <- subset(dataset, dataset$`Resumen Coronariopatia` == "3 vasos")
 
-plot_ly(alpha = 0.6,width = 610, height = 500) %>%
+plot_ly(alpha = 0.6,width = 690, height = 500) %>%
   add_histogram(x = cerovasos$PROCEDIMIENTO, name = "Zero vessels", marker = list(color = 'rgba(0,80,99,1)')) %>%
   add_histogram(x = unVaso$PROCEDIMIENTO, name = "One vessel", marker = list(color = 'rgba(0,172,177,1)')) %>%
   add_histogram(x = dosVasos$PROCEDIMIENTO, name = "Two vessels", marker = list(color = 'rgba(153,228,219,1)')) %>%
@@ -200,7 +189,7 @@ layout(barmode = "group", title = "", yaxis = list(title="Amount of patients"))
 </div>
 <div class="header2">
 </div>
-<div class="header4">
+<div class="header3">
 ## Patients by previous intervention
 <h4>According to scientific investigations, patients that had an angioplasty performed have a higher probability to need further interventions than patients that had a surgery performed. According to the dataset, there is no information about future complications or interventions. Instead, we divided patients who had an angioplasty performed and a surgery performed and observed the amount of patients that had previous interventions. In the case of patients who had an angioplasty, more than 40% of patients had an angioplasty done before. In the case of patients with a surgery performed, only 7% of patients had an angioplasty before. This is relevant information to know, as it gives the possibility to know either the patient will develop complications or will need further interventions. <a href="https://www.nejm.org/doi/pdf/10.1056/NEJM199410203311601 ">(Christian W. Hamn, M.D.. A randomized study of coronary angioplasty compared with bypass surgery in patients with symptomatic multivessel coronary disease. The New England Journal of Medicine. 1994)</a></h4>
 
@@ -208,7 +197,7 @@ layout(barmode = "group", title = "", yaxis = list(title="Amount of patients"))
 angioSubset <- subset(dataset, dataset$PROCEDIMIENTO == "ANGIOPLASTIA")
   cirugiaSubset<- subset(dataset, dataset$PROCEDIMIENTO == "CIRUGIA")
 
-plot_ly(width = 610, height = 500)%>%
+plot_ly(width = 690, height = 500)%>%
   add_pie(labels = angioSubset$`INTERVENCION PREVIA`, values = angioSubset, domain = list(x = c(0, 0.4), y = c(0.5)), name = "Angioplasty",title = "Angioplasty
           ")%>%
   add_pie(labels = cirugiaSubset$`INTERVENCION PREVIA`, values = cirugiaSubset, domain = list(x = c(0.6, 1), y = c(0.5)), name = "Surgery",title = "Surgery
@@ -221,7 +210,7 @@ plot_ly(width = 610, height = 500)%>%
 </div>
 <div class="header2">
 </div>
-<div class="header4">
+<div class="header3">
 ## Compromissed vessels by age and gender
 <h4>In males the peak of developing 1 or 2 compromised vessels is near the age of 70, whereas in females the peak of developing 1 or 2 compromised vessels is near the late 50’s. In the case of developing 3 compromised vessels in both males and females the peak is separated from 1 and 2 vessels curves. In females, this difference is greater than in males as the peak of developing 3 compromised vessels is near 75 years old. Another feature to notice is that the amount of males with 3 compromised is 30% times greater than females with 3 compromised vessels. This matches our previous analysis, where the male gender is considered as a risk factor to coronary disease.</h4>
 
@@ -231,7 +220,7 @@ vasos1mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronari
 vasos2mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronariopatia`=="2 vasos")$EDAD)
 vasos3mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronariopatia`=="3 vasos")$EDAD)
 
-fig1 <- plot_ly(x = ~vasos1mCoronarioDataset$x, y = ~vasos1mCoronarioDataset$y*2608.820422, type = 'scatter', mode = 'lines', name = '1 vessel', fill = 'tozeroy',width = 610, height = 500)%>% 
+fig1 <- plot_ly(x = ~vasos1mCoronarioDataset$x, y = ~vasos1mCoronarioDataset$y*2608.820422, type = 'scatter', mode = 'lines', name = '1 vessel', fill = 'tozeroy',width = 690, height = 500)%>% 
   add_trace(x = ~vasos2mCoronarioDataset$x, y = ~vasos2mCoronarioDataset$y*2608.820422, name = '2 vessels', fill = 'tozeroy')%>%
   add_trace(x = ~vasos3mCoronarioDataset$x, y = ~vasos3mCoronarioDataset$y*2608.820422, name = '3 vessels', fill = 'tozeroy')%>%
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
@@ -242,7 +231,7 @@ vasos1fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coro
 vasos2fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coronariopatia`=="2 vasos")$EDAD)
 vasos3fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coronariopatia`=="3 vasos")$EDAD)
 
-fig2<-plot_ly(type = 'scatter', mode = 'lines', showlegend=FALSE,width = 610, height = 500)%>% 
+fig2<-plot_ly(type = 'scatter', mode = 'lines', showlegend=FALSE,width = 690, height = 500)%>% 
   add_trace(x = ~vasos1fCoronarioDataset$x, y = ~vasos1fCoronarioDataset$y*2019.196093, name = '1 vaso', fill = 'tozeroy', line = list(color = 'rgba(31,119,180,1)'),fillcolor = 'rgba(31,119,180,0.5)')%>%
   add_trace(x = ~vasos2fCoronarioDataset$x, y = ~vasos2fCoronarioDataset$y*2019.196093, name = '2 vasos', fill = 'tozeroy', line = list(color = 'rgba(255,127,14,1)'),fillcolor = 'rgba(255,127,14,0.5)')%>%
   add_trace(x = ~vasos3fCoronarioDataset$x, y = ~vasos3fCoronarioDataset$y*2019.196093, name = '3 vasos', fill = 'tozeroy', line = list(color = 'rgba(44,160,44,1)'),fillcolor = 'rgba(44,160,44,0.5)')%>%
@@ -254,7 +243,7 @@ subplot(fig1,fig2)
 </div>
 <div class="header2">
 </div>
-<div class="header4">
+<div class="header3">
 ## Development of compromised  vessels by angioplastied vessels
 <h4>This graph shows the amount of patients that had an angioplasty performed according to which of the vessels were compromised. This shows that the two most compromised vessels in angioplasty patients are DA and CD.</h4>
 ```{r ,echo=FALSE}
@@ -263,7 +252,7 @@ angioCD <- subset(angioSubset,angioSubset$CD == 1)
 angioCDPROX <- subset(angioSubset,angioSubset$CDPROXIMAL == 1)
 angioCXPROX <- subset(angioSubset,angioSubset$CXPROXIMAL == 1)
 
-plot_ly(alpha = 0.6,width = 610, height = 500) %>%
+plot_ly(alpha = 0.6,width = 690, height = 500) %>%
   add_histogram(x = angioDA$PROCEDIMIENTO, name = "DA", marker = list(color = 'rgba(0,80,99,1)')) %>%
   add_histogram(x = angioCD$PROCEDIMIENTO, name = "CD", marker = list(color = 'rgba(0,172,177,1)')) %>%
   add_histogram(x = angioCDPROX$PROCEDIMIENTO, name = "CD PROXIMAL", marker=list(color='rgba(153,228,219,1)')) %>%
@@ -276,9 +265,9 @@ layout(barmode = "group", xaxis = list(visible=FALSE) , yaxis= list(title = 'Amo
 </div>
 <div class="header1">
 </div>
+<a name="predi"><a/>
 <div class="header2">
   <h1> Predictor </h1>
-
 
 <div class="content">
 
