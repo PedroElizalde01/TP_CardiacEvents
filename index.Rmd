@@ -11,12 +11,9 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-
-
 knitr::opts_chunk$set(echo = TRUE)
 library(readxl)
 library(plotly)
-
 
 dataset <- read_excel("C:/Users/Pedro/Desktop/dataset.xlsx")
 ```
@@ -57,7 +54,7 @@ body {
   padding: 30px;
   text-align: left;
   background: #99e4db;
-  color: white;
+  color: #02262e;
   font-size: 30px;
 }
 
@@ -65,10 +62,10 @@ body {
 .content {padding:20px;}
 </style>
 ```
-
+#
 <body>
 <div class="header1">
-  <p> Introduction </p>
+<p> Introduction </p>
 </div>
 </body>
 
@@ -76,7 +73,7 @@ body {
 <p> In order to analyze the provided dataset, we first investigated scientific papers and several universities or research institutes to understand the information present in our data. We then proceeded to apply this knowledge and information in analyzing and interpreting the data to come with a predictor of coronary disease. </p>
 </div>
 
-
+#
 <div class="header2">
   <p> Data analysis </p>
 </div>
@@ -85,7 +82,8 @@ body {
  In this section, we analyze the different factors that affect coronary disease patients in our dataset.
  
 ### Age distribution
-In order to analyze age on the dataset, it was divided into five categories, within 20 year intervals. This factor is considered as a risk factor to coronary disease as from ages 40 to 45 depending on the patient's gender, the risk of developing coronary disease increases (Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009;302(21):2388. doi: 10.1001/jama.302.21.2388). Link: https://jamanetwork.com/journals/jama/article-abstract/184989 
+In order to analyze age on the dataset, it was divided into five categories, within 20 year intervals. This factor is considered as a risk factor to coronary disease as from ages 40 to 45 depending on the patient's gender, the risk of developing coronary disease increases 
+<a href="https://jamanetwork.com/journals/jama/article-abstract/184989">(Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009)</a>
 
 
 ```{r ,echo=FALSE}
@@ -101,13 +99,14 @@ plot_ly(alpha = 0.7, orientation = 'h') %>%
   add_histogram(y = between40n60$EDAD, name = "Between 40 and 59", marker = list(color ='rgba(0,172,177,1)')) %>%
   add_histogram(y = between20n40$EDAD, name = "Between 20 and 39", marker = list(color ='rgba(152,228,219,1)')) %>%
   add_histogram(y = less20$EDAD, name = "Less than 20", marker = list(color ='rgba(202,240,193,1)')) %>%
-layout(barmode = "group", title = "")
+layout(barmode = "group", title = "", xaxis = list(title="Amount of patients"), yaxis = list(title="Ages"))
 
 
 ```
 
 ### Gender distribution
-Patients admitted with coronary disease represent more than 80% of the dataset. Males are considered to have an increased risk in developing coronary disease (Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009;302(21):2388. doi: 10.1001/jama.302.21.2388). Link: https://jamanetwork.com/journals/jama/article-abstract/184989 
+Patients admitted with coronary disease represent more than 80% of the dataset. Males are considered to have an increased risk in developing coronary disease 
+<a href="https://jamanetwork.com/journals/jama/article-abstract/184989 ">(Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009)</a> 
 
 
 ```{r ,echo=FALSE}
@@ -122,17 +121,18 @@ plot_ly(dataset, labels = ~SEXO, type = 'pie', width = 1) %>%
 From the total of patients in the dataset, most of these had an angioplasty performed, whereas the other patients had a surgery performed. This shows relevant information in order to analyze a relationship between previous patients' conditions and the type of procedure performed.
 
 ```{r ,echo=FALSE}
-dataset <- subset(dataset, dataset$PROCEDIMIENTO == "ANGIOPLASTIA" |dataset$PROCEDIMIENTO == "CIRUGIA")
+dataset <- subset(dataset, dataset$PROCEDIMIENTO == "ANGIOPLASTIA" | dataset$PROCEDIMIENTO == "CIRUGIA")
 
 plot_ly(alpha = 0.6,
-        marker = list(color = c('rgba(31,119,180,1)', 'rgba(255,127,14,1)'))) %>%
-  add_histogram(x = dataset$PROCEDIMIENTO, text = "ANGIOPLASTIC") %>%
-  layout(barmode = "group", title = "")
+        marker = list(color = c('rgba(0,80,99,1)', 'rgba(0,172,177,1)'), name = c("Angioplasty","Surgery"))) %>%
+  add_histogram(x = dataset$PROCEDIMIENTO) %>%
+  layout(barmode = "group", title = "", yaxis = list(title="Amount of patients"))
 ```
-Note: Due to the low quantity of patients in "Endoválvula" and "Cirugia,Endoválvula", we have decided not to include their data in our analysis 
 
+Note: Due to the low quantity of patients in "Endoválvula" and "Cirugia,Endoválvula", we have decided not to include their data in our analysis 
 </div>
 
+#
 <div class="header3">
   <p> Interpretation </p>
 </div>
@@ -157,20 +157,20 @@ This graph shows that the peak of ages of males and females in the dataset are b
 
 
 ### Procedure perfomed by risk factors
-We considered diabetes, EPOC and morbid obesity as risk factors as according to (Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009;302(21):2388. doi: 10.1001/jama.302.21.2388). As shown in the graph there is a greater amount of patients with diabetes that had an angioplasty performed than diabetics that had a surgery performed. However, according to scientific papers where randomized trials were performed, diabetic patients had a better outcome with an angioplasty done rather than a surgery. This showed significantly reduced rates of death and myocardial infarction (Michael E. Farkouh, M.D.. Strategies for Multivessel Revascularization in Patients with Diabetes. The New England Journal of Medicine. 2012). Link: https://www.nejm.org/doi/10.1056/NEJMoa1211585 
+We considered diabetes, EPOC and morbid obesity as risk factors as according to (Torpy JM, Burke AE, Glass RM. Coronary Heart Disease Risk Factors. JAMA. 2009;302(21):2388. doi: 10.1001/jama.302.21.2388). As shown in the graph there is a greater amount of patients with diabetes that had an angioplasty performed than diabetics that had a surgery performed. However, according to scientific papers where randomized trials were performed, diabetic patients had a better outcome with an angioplasty done rather than a surgery. This showed significantly reduced rates of death and myocardial infarction <a href="https://www.nejm.org/doi/10.1056/NEJMoa1211585">(Michael E. Farkouh, M.D.. Strategies for Multivessel Revascularization in Patients with Diabetes. The New England Journal of Medicine. 2012)</a>
 ```{r ,echo=FALSE}
 diabetes <- subset(dataset, dataset$DIABETES ==1)
 epoc  <- subset(dataset, dataset$EPOC ==1)
 obesidadMor <- subset(dataset, dataset$`OBESIDAD MORBIDA` == 1)
 plot_ly(alpha = 0.6) %>%
-  add_histogram(x = diabetes$PROCEDIMIENTO, name = "Diabetes",marker = list(color = 'rgba(0,80,99,1)')) %>%
+  add_histogram(x = diabetes$PROCEDIMIENTO, name = "Diabetics",marker = list(color = 'rgba(0,80,99,1)')) %>%
   add_histogram(x = epoc$PROCEDIMIENTO, name = "EPOC",marker = list(color = 'rgba(0,172,177,1)')) %>%
-  add_histogram(x = obesidadMor$PROCEDIMIENTO, name = "Obesidad Morbida",marker = list(color = 'rgba(153,228,219,1)')) %>%
-  layout(barmode = "group", title = "")
+  add_histogram(x = obesidadMor$PROCEDIMIENTO, name = "Obesity",marker = list(color = 'rgba(153,228,219,1)')) %>%
+  layout(barmode = "group", title = "", yaxis = list(title="Amount of patients"))
 ```
 
 ### Procedure perfomed by amount of compromised vessels
-This graph shows that patien ts with one or two compromised vessels were more likely to have an angioplasty performed rather than a surgery in more than 80% of the cases. In patients with three compromised vessels were more likely to have a surgery rather than an angioplasty done in more than 60% of the cases. According to clinical trials, generally the increase of compromised vessels leads to perform a surgery on the patient, whereas patients with few compromised vessels taken into an angioplasty procedure. (William S. Weintraub, M.D.. Comparative Effectiveness of Revascularization Strategies. The New England Journal of Medicine. 2012.). Link: https://www.nejm.org/doi/full/10.1056/nejmoa1110717 
+This graph shows that patien ts with one or two compromised vessels were more likely to have an angioplasty performed rather than a surgery in more than 80% of the cases. In patients with three compromised vessels were more likely to have a surgery rather than an angioplasty done in more than 60% of the cases. According to clinical trials, generally the increase of compromised vessels leads to perform a surgery on the patient, whereas patients with few compromised vessels taken into an angioplasty procedure. <a href="https://www.nejm.org/doi/full/10.1056/nejmoa1110717">(William S. Weintraub, M.D.. Comparative Effectiveness of Revascularization Strategies. The New England Journal of Medicine. 2012)</a>
 
 ```{r ,echo=FALSE}
 cerovasos <- dataset[!complete.cases(dataset$`Resumen Coronariopatia`),]
@@ -179,22 +179,25 @@ dosVasos <- subset(dataset, dataset$`Resumen Coronariopatia` == "2 vasos")
 tresVasos <- subset(dataset, dataset$`Resumen Coronariopatia` == "3 vasos")
 
 plot_ly(alpha = 0.6) %>%
-  add_histogram(x = cerovasos$PROCEDIMIENTO, name = "Cero Vasos", marker = list(color = 'rgba(0,80,99,1)')) %>%
-  add_histogram(x = unVaso$PROCEDIMIENTO, name = "Un Vaso", marker = list(color = 'rgba(0,172,177,1)')) %>%
-  add_histogram(x = dosVasos$PROCEDIMIENTO, name = "Dos Vasos", marker = list(color = 'rgba(153,228,219,1)')) %>%
-  add_histogram(x = tresVasos$PROCEDIMIENTO, name = "Tres Vasos", marker = list(color = 'rgba(202,240,193,1)')) %>%
-layout(barmode = "group", title = "")
+  add_histogram(x = cerovasos$PROCEDIMIENTO, name = "Zero vessels", marker = list(color = 'rgba(0,80,99,1)')) %>%
+  add_histogram(x = unVaso$PROCEDIMIENTO, name = "One vessel", marker = list(color = 'rgba(0,172,177,1)')) %>%
+  add_histogram(x = dosVasos$PROCEDIMIENTO, name = "Two vessels", marker = list(color = 'rgba(153,228,219,1)')) %>%
+  add_histogram(x = tresVasos$PROCEDIMIENTO, name = "Three vessels", marker = list(color = 'rgba(202,240,193,1)')) %>%
+layout(barmode = "group", title = "", yaxis = list(title="Amount of patients"))
 ```
 
 ### Patients by previous intervention
-According to scientific investigations, patients that had an angioplasty performed have a higher probability to need further interventions than patients that had a surgery performed. According to the dataset, there is no information about future complications or interventions. Instead, we divided patients who had an angioplasty performed and a surgery performed and observed the amount of patients that had previous interventions. In the case of patients who had an angioplasty, more than 40% of patients had an angioplasty done before. In the case of patients with a surgery performed, only 7% of patients had an angioplasty before. This is relevant information to know, as it gives the possibility to know either the patient will develop complications or will need further interventions. (Christian W. Hamn, M.D.. A randomized study of coronary angioplasty compared with bypass surgery in patients with symptomatic multivessel coronary disease. The New England Journal of Medicine. 1994.). LInk: https://www.nejm.org/doi/pdf/10.1056/NEJM199410203311601 
+According to scientific investigations, patients that had an angioplasty performed have a higher probability to need further interventions than patients that had a surgery performed. According to the dataset, there is no information about future complications or interventions. Instead, we divided patients who had an angioplasty performed and a surgery performed and observed the amount of patients that had previous interventions. In the case of patients who had an angioplasty, more than 40% of patients had an angioplasty done before. In the case of patients with a surgery performed, only 7% of patients had an angioplasty before. This is relevant information to know, as it gives the possibility to know either the patient will develop complications or will need further interventions. <a href="https://www.nejm.org/doi/pdf/10.1056/NEJM199410203311601 ">(Christian W. Hamn, M.D.. A randomized study of coronary angioplasty compared with bypass surgery in patients with symptomatic multivessel coronary disease. The New England Journal of Medicine. 1994)</a>
+
 ```{r ,echo=FALSE}
 angioSubset <- subset(dataset, dataset$PROCEDIMIENTO == "ANGIOPLASTIA")
-cirugiaSubset<- subset(dataset, dataset$PROCEDIMIENTO == "CIRUGIA")
+  cirugiaSubset<- subset(dataset, dataset$PROCEDIMIENTO == "CIRUGIA")
 
 plot_ly()%>%
-  add_pie(labels = angioSubset$`INTERVENCION PREVIA`, values = angioSubset, domain = list(x = c(0, 0.4), y = c(0.5)), name = "Angioplastic",title = "Angioplastic")%>%
-  add_pie(labels = cirugiaSubset$`INTERVENCION PREVIA`, values = cirugiaSubset, domain = list(x = c(0.6, 1), y = c(0.5)), name = "Surgery",title = "Surgery") %>%
+  add_pie(labels = angioSubset$`INTERVENCION PREVIA`, values = angioSubset, domain = list(x = c(0, 0.4), y = c(0.5)), name = "Angioplasty",title = "Angioplasty
+          ")%>%
+  add_pie(labels = cirugiaSubset$`INTERVENCION PREVIA`, values = cirugiaSubset, domain = list(x = c(0.6, 1), y = c(0.5)), name = "Surgery",title = "Surgery
+          ") %>%
   layout(title = "", showlegend = F,
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
@@ -210,9 +213,9 @@ vasos1mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronari
 vasos2mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronariopatia`=="2 vasos")$EDAD)
 vasos3mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronariopatia`=="3 vasos")$EDAD)
 
-fig1 <- plot_ly(x = ~vasos1mCoronarioDataset$x, y = ~vasos1mCoronarioDataset$y*2608.820422, type = 'scatter', mode = 'lines', name = '1 vaso', fill = 'tozeroy')%>% 
-  add_trace(x = ~vasos2mCoronarioDataset$x, y = ~vasos2mCoronarioDataset$y*2608.820422, name = '2 vasos', fill = 'tozeroy')%>%
-  add_trace(x = ~vasos3mCoronarioDataset$x, y = ~vasos3mCoronarioDataset$y*2608.820422, name = '3 vasos', fill = 'tozeroy')%>%
+fig1 <- plot_ly(x = ~vasos1mCoronarioDataset$x, y = ~vasos1mCoronarioDataset$y*2608.820422, type = 'scatter', mode = 'lines', name = '1 vessel', fill = 'tozeroy')%>% 
+  add_trace(x = ~vasos2mCoronarioDataset$x, y = ~vasos2mCoronarioDataset$y*2608.820422, name = '2 vessels', fill = 'tozeroy')%>%
+  add_trace(x = ~vasos3mCoronarioDataset$x, y = ~vasos3mCoronarioDataset$y*2608.820422, name = '3 vessels', fill = 'tozeroy')%>%
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
 
 
@@ -222,15 +225,12 @@ vasos2fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coro
 vasos3fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coronariopatia`=="3 vasos")$EDAD)
 
 fig2<-plot_ly(type = 'scatter', mode = 'lines', showlegend=FALSE)%>% 
-  add_trace(x = ~vasos1fCoronarioDataset$x, y = ~vasos1fCoronarioDataset$y*2019.196093, name = '1 vaso', fill = 'tozeroy', marker = list(color = 'rgba(31,119,180,1)'))%>%
-  add_trace(x = ~vasos2fCoronarioDataset$x, y = ~vasos2fCoronarioDataset$y*2019.196093, name = '2 vasos', fill = 'tozeroy', marker = list(color = 'rgba(255,127,14,1)'))%>%
-  add_trace(x = ~vasos3fCoronarioDataset$x, y = ~vasos3fCoronarioDataset$y*2019.196093, name = '3 vasos', fill = 'tozeroy', marker = list(color = 'rgba(44,160,44,1)'))%>%
+  add_trace(x = ~vasos1fCoronarioDataset$x, y = ~vasos1fCoronarioDataset$y*2019.196093, name = '1 vaso', fill = 'tozeroy', line = list(color = 'rgba(31,119,180,1)'),fillcolor = 'rgba(31,119,180,0.5)')%>%
+  add_trace(x = ~vasos2fCoronarioDataset$x, y = ~vasos2fCoronarioDataset$y*2019.196093, name = '2 vasos', fill = 'tozeroy', line = list(color = 'rgba(255,127,14,1)'),fillcolor = 'rgba(255,127,14,0.5)')%>%
+  add_trace(x = ~vasos3fCoronarioDataset$x, y = ~vasos3fCoronarioDataset$y*2019.196093, name = '3 vasos', fill = 'tozeroy', line = list(color = 'rgba(44,160,44,1)'),fillcolor = 'rgba(44,160,44,0.5)')%>%
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
 
-fig1
-
-fig2
-
+subplot(fig1,fig2)
 
 ```
 
@@ -247,11 +247,11 @@ plot_ly(alpha = 0.6) %>%
   add_histogram(x = angioCD$PROCEDIMIENTO, name = "CD", marker = list(color = 'rgba(0,172,177,1)')) %>%
   add_histogram(x = angioCDPROX$PROCEDIMIENTO, name = "CD PROXIMAL", marker=list(color='rgba(153,228,219,1)')) %>%
   add_histogram(x = angioCXPROX$PROCEDIMIENTO, name = "CX PROXIMAL", marker=list(color='rgba(202,240,193,1)'))%>%
-layout(barmode = "group", title = "")
+layout(barmode = "group", xaxis = list(visible=FALSE) , yaxis= list(title = 'Amount of patients'))
 
 ```
 </div>
-
+#
 <div class="header4">
   <p> Predictor </p>
 </div>
