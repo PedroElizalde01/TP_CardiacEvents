@@ -14,8 +14,11 @@ dataset <- read_excel("C:/Users/Pedro/Desktop/dataset.xlsx")
 ```
 
 
-```{css, echo=FALSE}
-<style>
+<style type="text/css">
+
+h1.title {
+  text-align:center;
+}
   
   {data-background=#ff0000}
     
@@ -50,7 +53,7 @@ body {
 
 .content {padding:20px;}
 </style>
-```
+
 </div>
 <a name="intro"><a/>
 <div class="header1">
@@ -125,7 +128,7 @@ plot_ly(alpha = 0.6,
 <h4>Note: Due to the low quantity of patients in "Endoválvula" and "Cirugia,Endoválvula", we have decided not to include their data in our analysis </h4>
 </div>
 </div>
-</div><!--DATA ANALYSIS HEADER-->
+</div><!--END DATA ANALYSIS HEADER-->
 <div class="header1">
 </div>
 <a name="inter"><a/>
@@ -261,7 +264,7 @@ layout(barmode = "group", xaxis = list(visible=FALSE) , yaxis= list(title = 'Amo
 
 ```
 </div>
-</div><!--INTERPRETATION HEADER-->
+</div><!--END INTERPRETATION HEADER-->
 </div>
 <div class="header1">
 </div>
@@ -272,8 +275,8 @@ layout(barmode = "group", xaxis = list(visible=FALSE) , yaxis= list(title = 'Amo
 <div class="content">
 
 </div>
-</div><!--PREDICATOR HEADER-->
-</div><!--INTRODUCTION HEADER-->
+</div><!--END PREDICATOR HEADER-->
+</div><!--END INTRODUCTION HEADER-->
 </div>
 <div class="header1">
 <div class="header2">
@@ -284,9 +287,9 @@ layout(barmode = "group", xaxis = list(visible=FALSE) , yaxis= list(title = 'Amo
 
 * Antonia Storni
 
-* Juan Cruz Estevez
+* Juan Cruz Estévez
 
-* Manuel Hernandez
+* Manuel Hernández
 
 * Pedro Elizalde
 </h3>
