@@ -103,7 +103,7 @@ layout(barmode = "group", title = "", xaxis = list(title="Amount of patients"), 
 
 
 ```{r ,echo=FALSE}
-plot_ly(dataset, labels = ~SEXO, type = 'pie',width = 1120, height = 500) %>%
+plot_ly(dataset, labels = ~SEXO, type = 'pie',width = 1120, height = 500, marker = list(colors = c('#02262e', '#99e4db'))) %>%
   layout(title = '',
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
@@ -147,8 +147,8 @@ density1 <- density(menSubset$EDAD)
 womenSubset <- dataset[which(dataset$SEXO == "FEME"),]
 density2 <- density(womenSubset$EDAD)
 
-plot_ly(x = ~density1$x, y = density1$y*2968.289173, type = 'scatter', mode = 'lines', name = 'Men', fill = 'tozerox',width = 1120, height = 500)%>% 
-  add_trace(x = ~density2$x, y = density2$y*2968.289173, name = 'Women', fill = 'tozerox')%>% 
+plot_ly(x = ~density1$x, y = density1$y*2968.289173, type = 'scatter', mode = 'lines', name = 'Men', fill = 'tozerox',width = 1120, height = 500, line = list(color = 'rgba(2,38,46,1)'),fillcolor = 'rgba(2,38,46,0.4)')%>% 
+  add_trace(x = ~density2$x, y = density2$y*2968.289173, name = 'Women', fill = 'tozerox', line = list(color = 'rgba(152,228,219,1)'),fillcolor = 'rgba(152,228,219,0.4)')%>% 
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
 ```
 <h4>This graph shows that the peak of ages of males and females in the dataset are both near 65 years.</h4>
@@ -198,7 +198,7 @@ layout(barmode = "group", title = "", yaxis = list(title="Amount of patients"))
 
 ```{r ,echo=FALSE}
 angioSubset <- subset(dataset, dataset$PROCEDIMIENTO == "ANGIOPLASTIA")
-  cirugiaSubset<- subset(dataset, dataset$PROCEDIMIENTO == "CIRUGIA")
+cirugiaSubset<- subset(dataset, dataset$PROCEDIMIENTO == "CIRUGIA")
 
 plot_ly(width = 1120, height = 500)%>%
   add_pie(labels = angioSubset$`INTERVENCION PREVIA`, values = angioSubset, domain = list(x = c(0, 0.4), y = c(0.5)), name = "Angioplasty",title = "Angioplasty
@@ -223,9 +223,9 @@ vasos1mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronari
 vasos2mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronariopatia`=="2 vasos")$EDAD)
 vasos3mCoronarioDataset <- density(subset(menSubset, menSubset$`Resumen Coronariopatia`=="3 vasos")$EDAD)
 
-fig1 <- plot_ly(x = ~vasos1mCoronarioDataset$x, y = ~vasos1mCoronarioDataset$y*2608.820422, type = 'scatter', mode = 'lines', name = '1 vessel', fill = 'tozeroy',width = 1120, height = 500)%>% 
-  add_trace(x = ~vasos2mCoronarioDataset$x, y = ~vasos2mCoronarioDataset$y*2608.820422, name = '2 vessels', fill = 'tozeroy')%>%
-  add_trace(x = ~vasos3mCoronarioDataset$x, y = ~vasos3mCoronarioDataset$y*2608.820422, name = '3 vessels', fill = 'tozeroy')%>%
+fig1 <- plot_ly(x = ~vasos1mCoronarioDataset$x, y = ~vasos1mCoronarioDataset$y*2608.820422, type = 'scatter', mode = 'lines', name = '1 vessel', fill = 'tozeroy',width = 1120, height = 500, line = list(color = 'rgba(2,38,46,1)'),fillcolor = 'rgba(2,38,46,0.4)')%>% 
+  add_trace(x = ~vasos2mCoronarioDataset$x, y = ~vasos2mCoronarioDataset$y*2608.820422, name = '2 vessels', fill = 'tozeroy', line = list(color = 'rgba(0,172,177,1)'),fillcolor = 'rgba(0,172,177,0.5)')%>%
+  add_trace(x = ~vasos3mCoronarioDataset$x, y = ~vasos3mCoronarioDataset$y*2608.820422, name = '3 vessels', fill = 'tozeroy', line = list(color = 'rgba(202,240,193,1)'),fillcolor = 'rgba(202,240,193,0.4)')%>%
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
 
 
@@ -235,12 +235,16 @@ vasos2fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coro
 vasos3fCoronarioDataset <- density(subset(womenSubset, womenSubset$`Resumen Coronariopatia`=="3 vasos")$EDAD)
 
 fig2<-plot_ly(type = 'scatter', mode = 'lines', showlegend=FALSE,width = 1120, height = 500)%>% 
-  add_trace(x = ~vasos1fCoronarioDataset$x, y = ~vasos1fCoronarioDataset$y*2019.196093, name = '1 vaso', fill = 'tozeroy', line = list(color = 'rgba(31,119,180,1)'),fillcolor = 'rgba(31,119,180,0.5)')%>%
-  add_trace(x = ~vasos2fCoronarioDataset$x, y = ~vasos2fCoronarioDataset$y*2019.196093, name = '2 vasos', fill = 'tozeroy', line = list(color = 'rgba(255,127,14,1)'),fillcolor = 'rgba(255,127,14,0.5)')%>%
-  add_trace(x = ~vasos3fCoronarioDataset$x, y = ~vasos3fCoronarioDataset$y*2019.196093, name = '3 vasos', fill = 'tozeroy', line = list(color = 'rgba(44,160,44,1)'),fillcolor = 'rgba(44,160,44,0.5)')%>%
+  add_trace(x = ~vasos1fCoronarioDataset$x, y = ~vasos1fCoronarioDataset$y*2019.196093, name = '1 vaso', fill = 'tozeroy', line = list(color = 'rgba(2,38,46,1)'),fillcolor = 'rgba(2,38,46,0.4)')%>%
+  add_trace(x = ~vasos2fCoronarioDataset$x, y = ~vasos2fCoronarioDataset$y*2019.196093, name = '2 vasos', fill = 'tozeroy', line = list(color = 'rgba(0,172,177,1)'),fillcolor = 'rgba(0,172,177,0.5)')%>%
+  add_trace(x = ~vasos3fCoronarioDataset$x, y = ~vasos3fCoronarioDataset$y*2019.196093, name = '3 vasos', fill = 'tozeroy', line = list(color = 'rgba(202,240,193,1)'),fillcolor = 'rgba(202,240,193,0.4)')%>%
   layout(xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
 
-subplot(fig1,fig2)
+subplot(fig1,fig2)%>%
+  layout(annotations = list(
+ list(x = 0.2 , y = 1.05, text = "Men", showarrow = F, xref='paper', yref='paper'),
+  list(x = 0.8 , y = 1.05, text = "Women", showarrow = F, xref='paper', yref='paper')),
+ xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
 
 ```
 </div>
