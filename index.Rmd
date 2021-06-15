@@ -103,7 +103,7 @@ layout(barmode = "group", title = "", xaxis = list(title="Amount of patients"), 
 
 
 ```{r ,echo=FALSE}
-plot_ly(dataset, labels = ~SEXO, type = 'pie',width = 1120, height = 500, marker = list(colors = c('#005063', '#1F77B4'))) %>%
+plot_ly(dataset, labels = ~SEXO, type = 'pie',width = 1120, height = 500, marker = list(colors = c('rgba(0,80,99,1)', 'rgba(152,228,219,1)'))) %>%
   layout(title = '',
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
@@ -202,7 +202,7 @@ cirugiaSubset<- subset(dataset, dataset$PROCEDIMIENTO == "CIRUGIA")
 
 plot_ly(width = 1120, height = 500)%>%
   add_pie(labels = angioSubset$`INTERVENCION PREVIA`, values = angioSubset, domain = list(x = c(0, 0.4), y = c(0.5)), name = "Angioplasty",title = "Angioplasty
-          ")%>%
+          ",marker = list(colors = c('rgba(152,228,219,1)','','rgba(0,172,177,1)','','','','rgba(0,80,99,1)','','','','','','','','','','','','','','','','','','','','','rgba(202,240,193,1)'), line = list(color = '#FFFFFF', width = 1)))%>%
   add_pie(labels = cirugiaSubset$`INTERVENCION PREVIA`, values = cirugiaSubset, domain = list(x = c(0.6, 1), y = c(0.5)), name = "Surgery",title = "Surgery
           ") %>%
   layout(title = "", showlegend = F,
