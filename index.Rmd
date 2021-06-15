@@ -103,7 +103,7 @@ layout(barmode = "group", title = "", xaxis = list(title="Amount of patients"), 
 
 
 ```{r ,echo=FALSE}
-plot_ly(dataset, labels = ~SEXO, type = 'pie',width = 1120, height = 500, marker = list(colors = c('#02262e', '#99e4db'))) %>%
+plot_ly(dataset, labels = ~SEXO, type = 'pie',width = 1120, height = 500, marker = list(colors = c('#005063', '#1F77B4'))) %>%
   layout(title = '',
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
@@ -242,9 +242,8 @@ fig2<-plot_ly(type = 'scatter', mode = 'lines', showlegend=FALSE,width = 1120, h
 
 subplot(fig1,fig2)%>%
   layout(annotations = list(
- list(x = 0.2 , y = 1.05, text = "Men", showarrow = F, xref='paper', yref='paper'),
-  list(x = 0.8 , y = 1.05, text = "Women", showarrow = F, xref='paper', yref='paper')),
- xaxis = list(title = 'Age'),yaxis = list(title = 'Density'))
+ list(x = 0.2 , y = 1.05, text = "Men", showarrow = F, xref='paper', yref='paper',font = list(size = 15)),
+  list(x = 0.8 , y = 1.05, text = "Women", showarrow = F, xref='paper', yref='paper',font = list(size = 15)), list(x = 0.5 , y = -0.08, text = "Age", showarrow = F, xref='paper', yref='paper', font = list(size = 15))), yaxis = list(title = 'Density'))
 
 ```
 </div>
