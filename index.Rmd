@@ -29,7 +29,7 @@ body {
 
 .header1 {
   padding: 30px;
-  text-align: left;
+  text-align:center;
   background: #02262e;
   color: white;
   font-size: 30px;
@@ -274,8 +274,12 @@ layout(barmode = "group", xaxis = list(visible=FALSE) , yaxis= list(title = 'Amo
 <a name="predi"><a/>
 <div class="header2">
   <h1> Predictor </h1>
-
 <div class="content">
+
+```{r ,echo=FALSE}
+
+
+```
 
 </div>
 </div><!--END PREDICATOR HEADER-->
