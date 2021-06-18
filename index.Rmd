@@ -286,6 +286,22 @@ layout(barmode = "group", xaxis = list(visible=FALSE) , yaxis= list(title = 'Amo
 <div class="header2">
   <h1> Predictor </h1>
 <div class="content">
+<div class="header3">
+## We decided to predict whether the patients should go to Angioplasty or Surgery
+<h4>After our research, the factors that will be taken into account for the prediction are the following:
+<ul>
+  <li>Age</li>
+  <li>Gender</li>
+  <li>EPOC</li>
+  <li>Diabetes</li>
+  <li>Morbid obesity</li>
+  <li>Amount of crompromised vessels</li>
+</ul> 
+</div>
+<div class="header3">
+## Model 
+<h4>To choose the model that will be used, we took into account that most of our variables are categoric, so we decided to use a generalized linear model. </h4>
+
 
 ```{r ,echo=FALSE}
 
@@ -301,8 +317,12 @@ trainSet <- dataset[ index,]
 testSet <- dataset[-index,]
 
 fit1 <- rpart(PROCEDIMIENTO ~  EDAD + SEXO+ EPOC + DIABETES + `OBESIDAD MORBIDA` + `Resumen Coronariopatia`, data = trainSet, parms = list(split = 'gini'))
-
 fancyRpartPlot(fit1)
+```
+
+
+```{r ,echo=FALSE}
+
 
 data.out <- glm(PROCEDIMIENTO~EDAD+SEXO+DIABETES+EPOC+`OBESIDAD MORBIDA`+`Resumen Coronariopatia`,
                data=dataset, family="binomial")
