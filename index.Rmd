@@ -9,6 +9,17 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 library(readxl)
 library(plotly)
+library(rpart)
+library(rattle)
+library(tibble)
+library(bitops)
+library(readxl)
+library(plotly)
+library(corrplot)
+library(ROCR)
+library(caret)
+library(rpart)
+library(dplyr)
 
 dataset <- read_excel("C:/Users/Pedro/Desktop/dataset.xlsx")
 ```
@@ -278,6 +289,50 @@ layout(barmode = "group", xaxis = list(visible=FALSE) , yaxis= list(title = 'Amo
 
 ```{r ,echo=FALSE}
 
+
+dataset$SEXO <-factor(dataset$SEXO, levels = c("MASC","FEME"), labels =c("1 hombre","2 mujer"))
+dataset$PROCEDIMIENTO <- factor(dataset$PROCEDIMIENTO, levels = c("ANGIOPLASTIA","CIRUGIA"), labels =c("1 angio","2 cirugia"))
+dataset$EDAD <- findInterval(dataset$EDAD, c(0,20, 40, 60, 80,Inf))
+dataset <- dataset[which(!is.na(dataset$PROCEDIMIENTO)),]
+dataset <- dataset[which(!is.na(dataset$`Resumen Coronariopatia`)),]
+
+index <- createDataPartition(dataset$PROCEDIMIENTO, p=0.75, list=FALSE)
+trainSet <- dataset[ index,]
+testSet <- dataset[-index,]
+
+fit1 <- rpart(PROCEDIMIENTO ~  EDAD + SEXO+ EPOC + DIABETES + `OBESIDAD MORBIDA` + `Resumen Coronariopatia`, data = trainSet, parms = list(split = 'gini'))
+
+fancyRpartPlot(fit1)
+
+data.out <- glm(PROCEDIMIENTO~EDAD+SEXO+DIABETES+EPOC+`OBESIDAD MORBIDA`+`Resumen Coronariopatia`,
+               data=dataset, family="binomial")
+
+control <- rfeControl(functions = rfFuncs,
+                      method = "repeatedcv",
+                      repeats = 3,
+                      verbose = FALSE)
+
+outcomeName<-'PROCEDIMIENTO'
+
+predictors<-names(trainSet)[!names(trainSet) %in% outcomeName]
+
+
+predictions<-predict(data.out,testSet)
+
+plotROC <- function(pred){
+  perf<- performance(pred,"tpr","fpr")
+  plot(perf)
+  AUC<-performance(pred,"auc")@y.values[[1]]
+  grid()
+  text(.6,.2,sprintf("AUC=%0.3f", AUC))
+  abline(0,1,col="red", lty = 2)
+}
+
+predaux<-prediction(as.numeric(predictions),testSet[,outcomeName])
+
+perf <- performance(predaux, "auc")
+porcentajePrecision <- perf@y.values[[1]]
+plotROC(predaux)
 
 ```
 
