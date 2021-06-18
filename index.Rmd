@@ -13,12 +13,9 @@ library(rpart)
 library(rattle)
 library(tibble)
 library(bitops)
-library(readxl)
-library(plotly)
 library(corrplot)
 library(ROCR)
 library(caret)
-library(rpart)
 library(dplyr)
 
 dataset <- read_excel("C:/Users/Pedro/Desktop/dataset.xlsx")
@@ -286,9 +283,8 @@ layout(barmode = "group", xaxis = list(visible=FALSE) , yaxis= list(title = 'Amo
 <div class="header2">
   <h1> Predictor </h1>
 <div class="content">
-<div class="header3">
-## We decided to predict whether the patients should go to Angioplasty or Surgery
-<h4>After our research, the factors that will be taken into account for the prediction are the following:
+<h4> We decided to predict whether the patients should go to Angioplasty or Surgery.
+After our research, the factors that will be taken into account for the prediction are the following:
 <ul>
   <li>Age</li>
   <li>Gender</li>
@@ -297,17 +293,16 @@ layout(barmode = "group", xaxis = list(visible=FALSE) , yaxis= list(title = 'Amo
   <li>Morbid obesity</li>
   <li>Amount of crompromised vessels</li>
 </ul> 
-</div>
+</h4>
 <div class="header3">
 ## Model 
 <h4>To choose the model that will be used, we took into account that most of our variables are categoric, so we decided to use a generalized linear model. </h4>
 
-
+## Confusion matrix 
+<h4>In the next matrix we can estimate how precise the prediction is. The FALSE label refers to Angioplsty and the TRUE refers to Surgery </h4>
 ```{r ,echo=FALSE}
-
-
 dataset$SEXO <-factor(dataset$SEXO, levels = c("MASC","FEME"), labels =c("1 hombre","2 mujer"))
-dataset$PROCEDIMIENTO <- factor(dataset$PROCEDIMIENTO, levels = c("ANGIOPLASTIA","CIRUGIA"), labels =c("1 angio","2 cirugia"))
+dataset$PROCEDIMIENTO <- factor(dataset$PROCEDIMIENTO, levels = c("ANGIOPLASTIA","CIRUGIA"), labels =c("FALSE","TRUE"))
 dataset$EDAD <- findInterval(dataset$EDAD, c(0,20, 40, 60, 80,Inf))
 dataset <- dataset[which(!is.na(dataset$PROCEDIMIENTO)),]
 dataset <- dataset[which(!is.na(dataset$`Resumen Coronariopatia`)),]
@@ -315,13 +310,6 @@ dataset <- dataset[which(!is.na(dataset$`Resumen Coronariopatia`)),]
 index <- createDataPartition(dataset$PROCEDIMIENTO, p=0.75, list=FALSE)
 trainSet <- dataset[ index,]
 testSet <- dataset[-index,]
-
-fit1 <- rpart(PROCEDIMIENTO ~  EDAD + SEXO+ EPOC + DIABETES + `OBESIDAD MORBIDA` + `Resumen Coronariopatia`, data = trainSet, parms = list(split = 'gini'))
-fancyRpartPlot(fit1)
-```
-
-
-```{r ,echo=FALSE}
 
 
 data.out <- glm(PROCEDIMIENTO~EDAD+SEXO+DIABETES+EPOC+`OBESIDAD MORBIDA`+`Resumen Coronariopatia`,
@@ -338,6 +326,15 @@ predictors<-names(trainSet)[!names(trainSet) %in% outcomeName]
 
 predictions<-predict(data.out,testSet)
 
+table(testSet$PROCEDIMIENTO,predictions > 0.45)
+
+```
+<h4> We can see that out of 68 total patients, it predicted 53 patients with Angioplasty out of 54. And, 7 patients with Surgery out of 14</h4>
+
+
+## AUROC Curve
+<h4> The value of the curve determines the accuracy of the prediction. When the number approaches 1, the accuracy increases.</h4>
+```{r ,echo=FALSE}
 plotROC <- function(pred){
   perf<- performance(pred,"tpr","fpr")
   plot(perf)
