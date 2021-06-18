@@ -299,7 +299,7 @@ After our research, the factors that will be taken into account for the predicti
 <h4>To choose the model that will be used, we took into account that most of our variables are categoric, so we decided to use a generalized linear model. </h4>
 
 ## Confusion matrix 
-<h4>In the next matrix we can estimate how precise the prediction is. The FALSE label refers to Angioplsty and the TRUE refers to Surgery </h4>
+<h4>In the next matrix we can estimate how precise the prediction is. The FALSE label refers to Angioplsty and the TRUE refers to Surgery.</h4>
 ```{r ,echo=FALSE}
 dataset$SEXO <-factor(dataset$SEXO, levels = c("MASC","FEME"), labels =c("1 hombre","2 mujer"))
 dataset$PROCEDIMIENTO <- factor(dataset$PROCEDIMIENTO, levels = c("ANGIOPLASTIA","CIRUGIA"), labels =c("FALSE","TRUE"))
@@ -329,7 +329,7 @@ predictions<-predict(data.out,testSet)
 table(testSet$PROCEDIMIENTO,predictions > 0.45)
 
 ```
-<h4> We can see that out of 68 total patients, it predicted 53 patients with Angioplasty out of 54. And, 7 patients with Surgery out of 14</h4>
+<h4> We can see that out of 68 total patients, it predicted 51 patients with Angioplasty out of 54. And, 7 patients with Surgery out of 14.</h4>
 
 
 ## AUROC Curve
@@ -352,7 +352,7 @@ porcentajePrecision <- perf@y.values[[1]]
 plotROC(predaux)
 
 ```
-
+<h4> As we can see in the AUROC Curve, there is an AUC of 0.834, which means in more than 80% of cases the prediction is valid.</h4>
 </div>
 </div><!--END PREDICATOR HEADER-->
 </div><!--END INTRODUCTION HEADER-->
