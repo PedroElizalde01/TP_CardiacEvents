@@ -316,7 +316,6 @@ outcomeName<-'PROCEDIMIENTO'
 
 predictors<-names(trainSet)[!names(trainSet) %in% outcomeName]
 
-
 predictions<-predict(data.out,testSet)
 
 plotROC <- function(pred){
@@ -331,6 +330,7 @@ plotROC <- function(pred){
 predaux<-prediction(as.numeric(predictions),testSet[,outcomeName])
 
 perf <- performance(predaux, "auc")
+
 porcentajePrecision <- perf@y.values[[1]]
 plotROC(predaux)
 
