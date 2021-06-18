@@ -329,7 +329,6 @@ predictions<-predict(data.out,testSet)
 table(testSet$PROCEDIMIENTO,predictions > 0.45)
 
 ```
-<h4> We can see that out of 68 total patients, it predicted 51 patients with Angioplasty out of 54. And, 7 patients with Surgery out of 14.</h4>
 
 
 ## AUROC Curve
@@ -352,7 +351,6 @@ porcentajePrecision <- perf@y.values[[1]]
 plotROC(predaux)
 
 ```
-<h4> As we can see in the AUROC Curve, there is an AUC of 0.834, which means in more than 80% of cases the prediction is valid.</h4>
 </div>
 </div><!--END PREDICATOR HEADER-->
 </div><!--END INTRODUCTION HEADER-->
