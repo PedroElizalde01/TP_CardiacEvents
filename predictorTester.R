@@ -23,9 +23,22 @@ fit1 <- rpart(PROCEDIMIENTO ~ SEXO + DIABETES + EPOC + `OBESIDAD MORBIDA`, data 
 library(rattle)
 fancyRpartPlot(fit1)
 
+summary(fit1)
+
 index <- createDataPartition(dataset$PROCEDIMIENTO, p=0.75, list=FALSE)
 trainSet <- dataset[ index,]
 testSet <- dataset[-index,]
+
+Predictions <- predict(fit1, testSet, type = "class")
+
+outcomeName<-'PROCEDIMIENTO'
+
+predictors<-names(trainSet)[!names(trainSet) %in% outcomeName]
+
+model_gbm<-train(trainSet[,predictors],trainSet[,outcomeName],method='gbm',trControl=fitControl,tuneGrid=grid)
+
+predictions<-predict.train(object=model_gbm,testSet[,predictors],type="raw")
+
 
 confusionMatrix(predictions,testSet[,outcomeName])
 
@@ -42,10 +55,11 @@ confusionMatrix(predictions,testSet[,outcomeName])
 
 
 
-dataset.out <- glm(PROCEDIMIENTO ~ SEXO + DIABETES + EPOC + `OBESIDAD MORBIDA` + `Resumen Coronariopatia`,
+dataset.out <- glm(PROCEDIMIENTO ~ SEXO + DIABETES + `OBESIDAD MORBIDA`,
                    data=dataset, family="binomial")
 
 summary(dataset.out)
+
 
 predsAll<-predict(dataset.out, type = "response")
 
